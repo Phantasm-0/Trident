@@ -1,4 +1,4 @@
-import telebot,psycopg2, time, logging,htmlentities
+import telebot,psycopg2, time, logging,htmlentities,re,urllib.parse
 from psycopg2 import sql
 RoyalTrident_bot = telebot.AsyncTeleBot('1222435814:AAFPEFv8ad_2xBIuYUMc5aIDxqKGhAKRijo')
 conn = psycopg2.connect(database='postgres', user='postgres', password='123Anapa2017', host='localhost',port = 5432)
