@@ -4,30 +4,50 @@ RoyalTrident_bot = telebot.AsyncTeleBot('1222435814:AAFPEFv8ad_2xBIuYUMc5aIDxqKG
 conn = psycopg2.connect(database='postgres', user='postgres', password='123Anapa2017', host='localhost',port = 5432)
 db = conn.cursor()
 
+
+  
+
+
+
+
+
 @RoyalTrident_bot.message_handler(regexp="^[дД]ай")
 def give_any(message):
-  print("give")
+  print("give") 
   text = message.text
-  g_withdraw ="/g_withdraw "
+  g_withdraw ="/g_withdraw"
   answer = g_withdraw
+  additional_any = []
   amount = "1"
   if(re.search("\d{1,100}",text)):
      result = re.search("\d{1,100}",text)
      amount = result.group(0)
-  if(re.search("\s[Фф][Дд][\s$]",text)):
+  if(re.search("\s[Фф][Дд]($|\s)",text)):
             answer += " p04 " + amount +  " p05 " +  amount + " p06 " +  amount
-  if(re.search("\s[Фф][Рр][\s$]",text)):
+  if(re.search("\s[Фф][Рр]($|\s)",text)):
             answer += " p01 " + amount +  " p02 " +  amount + " p03 " +  amount
-  if(re.search("\s[Мм][Оо][Рр][Фф][Ыы][\s$]",text)) :
+  if(re.search("\s[Мм][Оо][Рр][Фф][Ыы]($|\s)",text)) :
             answer += " p19 " + amount +  " p20 " +  amount + " p21 " +  amount
   if(answer == g_withdraw):
-      return
+    if(re.search("\s\w{1,100}",text)):
+      result = re.findall("\s\w{1,100}",text)
+      print(result)
+      while(len(result)>18):
+         while (len(additional_any) != 18):
+               additional_any.insert(0, result.pop(0))
+         give_additional_any(additional_any,message)
+         additional_any.clear()
+      for element in result:
+            if(element != ("дай" or "Дай" )):
+              answer += element + " "
+  if(answer == g_withdraw):
+    return          
   answer_url = urllib.parse.quote(answer,)
   answer_html = '<a href="https://t.me/share/url?url=' + answer_url +  '">'+ answer + '</a>'
   RoyalTrident_bot.send_message(message.chat.id,answer_html,parse_mode = 'HTML')
 
 
-  
+
 @RoyalTrident_bot.message_handler(commands = ['info'])
 def info(message):
     reply = message.reply_to_message
@@ -264,6 +284,16 @@ def Nonestr(x):
     if x is None:
         return ""
     return x
+
+def give_additional_any(result,message):
+    g_withdraw ="/g_withdraw"
+    answer = g_withdraw
+    for i in result:
+            if(i != ("дай" or "Дай" )):
+              answer += i + " "
+    answer_url = urllib.parse.quote(answer,)
+    answer_html = '<a href="https://t.me/share/url?url=' + answer_url +  '">'+ answer + '</a>'
+    RoyalTrident_bot.send_message(message.chat.id,answer_html,parse_mode = 'HTML')
 
 def main():
   RoyalTrident_bot.polling(none_stop=True)
