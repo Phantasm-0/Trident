@@ -13,7 +13,6 @@ db = conn.cursor()
 
 @RoyalTrident_bot.message_handler(regexp="^[дД]ай")
 def give_any(message):
-  print("give") 
   text = message.text
   g_withdraw ="/g_withdraw"
   answer = g_withdraw
