@@ -25,12 +25,11 @@ def give_any(message):
             answer += " p04 " + amount +  " p05 " +  amount + " p06 " +  amount
   if(re.search("\s[Фф][Рр]($|\s)",text)):
             answer += " p01 " + amount +  " p02 " +  amount + " p03 " +  amount
-  if(re.search("\s[Мм][Оо][Рр][Фф][Ыы]($|\s)",text)) :
+  if(re.search("\s[Мм][Оо][Рр][Фф]([Ыы]|$|\s)",text)) :
             answer += " p19 " + amount +  " p20 " +  amount + " p21 " +  amount
   if(answer == g_withdraw):
     if(re.search("\s\w{1,100}",text)):
       result = re.findall("\s\w{1,100}",text)
-      print(result)
       while(len(result)>18):
          while (len(additional_any) != 18):
                additional_any.insert(0, result.pop(0))
