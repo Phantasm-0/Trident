@@ -38,7 +38,7 @@ def give_any(message):
          additional_any.clear()
       for element in result:
             if(element != ("дай" or "Дай" )):
-              answer += element + " "
+              answer += element 
   if(answer == g_withdraw):
     return          
   answer_url = urllib.parse.quote(answer,)
@@ -289,7 +289,7 @@ def give_additional_any(result,message):
     answer = g_withdraw
     for i in result:
             if(i != ("дай" or "Дай" )):
-              answer += i + " "
+              answer += i
     answer_url = urllib.parse.quote(answer,)
     answer_html = '<a href="https://t.me/share/url?url=' + answer_url +  '">'+ answer + '</a>'
     RoyalTrident_bot.send_message(message.chat.id,answer_html,parse_mode = 'HTML')
