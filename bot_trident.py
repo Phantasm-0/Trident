@@ -11,7 +11,7 @@ db = conn.cursor()
 
 
 
-@RoyalTrident_bot.message_handler(regexp="^[дД]ай")
+@RoyalTrident_bot.message_handler(regexp="^[дД]ай\s")
 def give_any(message):
   text = message.text
   g_withdraw ="/g_withdraw"
