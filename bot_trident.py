@@ -22,7 +22,7 @@ def stock(message):
   result_list = []
   html_start_string = '<a href="https://t.me/share/url?url='
 
-  if((re.search("Встреча",text) is not None) or(re.search("Deposited",text) is not None) or (re.search("Ты заметил враждебных существ",text) is not None)):
+  if((re.search("Встреча",text) is not None) or(re.search("Deposited",text) is not None) or (re.search("Ты заметил враждебных существ",text) is not None) or (re.search("Получено:",text) is not None)):
     return
 
 
