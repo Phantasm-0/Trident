@@ -27,7 +27,7 @@ def stock(message):
 
 
 
-  if(re.search("На верстаке ты видишь:",text) is not None):
+  if((re.search("На верстаке ты видишь:",text) is not None) or re.search("Не хватает материалов для крафта",text) is not None):
     result_list = re.findall(".{1,40}",text)
     for i in result_list: 
        for g  in res_list:
