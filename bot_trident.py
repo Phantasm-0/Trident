@@ -9,7 +9,28 @@ res_list = resource_pack.keys()
 
   
 
-
+@RoyalTrident_bot.message_handler(regexp = "Ты заметил враждебных существ")
+def mobs(message):
+    text = message.text
+    if((re.search("Ты заметил враждебных существ",text) is not None) and (re.search("It's an ambush!",text))):
+                link = re.search("\/fight.{1,100}",text)
+                markup = types.InlineKeyboardMarkup()
+                link = link.group(0)
+                url_link = urllib.parse.quote(link,)
+                answer_html = 'https://t.me/share/url?url=' + url_link 
+                btn_url = types.InlineKeyboardButton(text = "Кнопочка",url = answer_html)
+                markup.add(btn_url)
+                RoyalTrident_bot.send_message(message.chat.id,message.text,reply_markup = markup)
+                return
+    if(re.search("Ты заметил враждебных существ",text) is not None):
+                link = re.search("\/fight.{1,100}",text)
+                markup = types.InlineKeyboardMarkup()
+                link = link.group(0)
+                url_link = urllib.parse.quote(link,)
+                answer_html = 'https://t.me/share/url?url=' + url_link 
+                btn_url = types.InlineKeyboardButton(text = "Кнопочка",url = answer_html)
+                markup.add(btn_url)
+                RoyalTrident_bot.send_message(message.chat.id,text,reply_markup = markup)
 
 
 
