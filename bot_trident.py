@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
-import telebot,psycopg2, time, logging,htmlentities,re,urllib.parse,mobs.py
+import telebot,psycopg2, time, logging,htmlentities,re,urllib.parse,
 from psycopg2 import sql
-from telebot import types
+from telebot import types 
+import mobs.py as mobs
 import datetime
 RoyalTrident_bot = telebot.AsyncTeleBot('1222435814:AAFPEFv8ad_2xBIuYUMc5aIDxqKGhAKRijo')
 conn = psycopg2.connect(database='postgres', user='postgres', password='123Anapa2017', host='localhost',port = 5432)
@@ -10,14 +11,14 @@ resource_pack = {'Thread': '01','Stick': '02', 'Pelt': '03','Bone': '04','Coal':
 res_list = resource_pack.keys()
 
 @RoyalTrident_bot.callback_query_handler(func=lambda call: True)
-update_helpers(call)
+mobs.update_helpers(call)
 
 
 
 
 
 @RoyalTrident_bot.message_handler(func = lambda message: message.forward_from is not None and message.forward_from.username == "ChatWarsBot",regexp = "Ты заметил враждебных существ. " )
-find_mobs_message(message)
+mobs.find_mobs_message(message)
 
 
 
