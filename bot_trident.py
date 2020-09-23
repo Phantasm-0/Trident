@@ -17,7 +17,7 @@ def update_helpers(call):
   number_result = number_result[0] + 1
   db.execute('SELECT helpers FROM MOBS  WHERE link = %s',(call.data,))
   result = db.fetchone()
-  result = str(result[0])  + "<b>" + str(number_result) + "." +"</b>" call.from_user.first_name + "("+ "@" + call.from_user.username +  ")"
+  result = str(result[0])  + "<b>" + str(number_result) + "." +"</b>" + call.from_user.first_name + "("+ "@" + call.from_user.username +  ")"
   number_result = number_result + 1
   db.execute('UPDATE MOBS SET helpers = %s  WHERE link = %s',(result,call.data))
   conn.commit()
