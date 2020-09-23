@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-import telebot,psycopg2, time, logging,htmlentities,re,urllib.parse,
+import telebot,psycopg2, time, logging,htmlentities,re,urllib.parse
 from psycopg2 import sql
 from telebot import types 
 import mobs.py as mobs
