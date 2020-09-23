@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-import telebot,psycopg2, time, logging,htmlentities,re,urllib.parse, mobs.py
+import telebot,psycopg2, time, logging,htmlentities,re,urllib.parse,mobs.py
 from psycopg2 import sql
 from telebot import types
 import datetime
@@ -10,21 +10,13 @@ resource_pack = {'Thread': '01','Stick': '02', 'Pelt': '03','Bone': '04','Coal':
 res_list = resource_pack.keys()
 
 @RoyalTrident_bot.callback_query_handler(func=lambda call: True)
-def mobs_callback(call):
-  text = call.message.text + call.form_user.username
-  RoyalTrident_bot.edit_message_text(call..message.chat.id,call.message.id,,text)
-
-@RoyalTrident_bot.message_handler(commands = ["showtime"])
-def timing(message):
-  print(message.date)
-  print(datetime.datetime.now())
-  print(message.date - datetime.datetime.now())
-  print(datetime.timedelta(0))
+def update_helpers(call)
 
 
 
 
-@RoyalTrident_bot.message_handler(regexp = "Ты заметил враждебных существ")
+
+@RoyalTrident_bot.message_handler(func = lambda message: message.forward_from is not None and message.forward_from.username == "ChatWarsBot",regexp = "Ты заметил враждебных существ. " )
 def find_mobs_message(message)
 
 
@@ -432,6 +424,7 @@ def lower_check(table_list,ask):
 
 
 def main():
+  create_mobs_table()
   RoyalTrident_bot.polling(none_stop=True)
 
 
