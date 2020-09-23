@@ -10,14 +10,14 @@ resource_pack = {'Thread': '01','Stick': '02', 'Pelt': '03','Bone': '04','Coal':
 res_list = resource_pack.keys()
 
 @RoyalTrident_bot.callback_query_handler(func=lambda call: True)
-def update_helpers(call)
+update_helpers(call)
 
 
 
 
 
 @RoyalTrident_bot.message_handler(func = lambda message: message.forward_from is not None and message.forward_from.username == "ChatWarsBot",regexp = "Ты заметил враждебных существ. " )
-def find_mobs_message(message)
+find_mobs_message(message)
 
 
 
