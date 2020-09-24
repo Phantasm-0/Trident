@@ -11,11 +11,11 @@ def update_helpers(call):
   number_result = number_result[0] + 1
   db.execute('SELECT helpers FROM MOBS  WHERE link = %s',(call.data,))
   result = db.fetchone()
-  result = str(result[0])  + "<b>" + str(number_result) + "." +"</b>" + call.from_user.first_name + "("+ "@" + call.from_user.username +  ")"
-  number_result = number_result + 1
+  result = str(result[0])  + "\n" + "<b>" + str(number_result) + "." +"</b>" + call.from_user.first_name + "("+ "@" + call.from_user.username +  ")"
   db.execute('UPDATE MOBS SET helpers = %s  WHERE link = %s',(result,call.data))
   conn.commit()
   db.execute('UPDATE MOBS SET helpers_number = %s  WHERE link = %s',(number_result,call.data))
+  conn.commit()
   RoyalTrident_bot.edit_message_reply_markup(call.message.chat.id,call.message.message_id,reply_markup = mobs_markups("⚔️ В бой","🤝 Помогаю",call.data) )
 
 def find_mobs_message(message):
@@ -35,7 +35,6 @@ def find_mobs_message(message):
   db.execute('SELECT helpers_number FROM MOBS helpers_number WHERE link = %s',(link,))
   number_result = db.fetchone()
   update_mobs_message(link,timer,message.chat.id,message_for_update.message_id,message.forward_date,mobs_text_parsed)
-
 
 
 def create_mobs_table():
