@@ -11,14 +11,12 @@ def update_helpers(call):
   number_result = number_result[0] + 1
   db.execute('SELECT helpers FROM MOBS  WHERE link = %s',(call.data,))
   result = db.fetchone()
-  result = str(result[0])  + "<b>" + str(number_result) + "." +"</b>" call.from_user.first_name + "("+ "@" + call.from_user.username +  ")"
+  result = str(result[0])  + "<b>" + str(number_result) + "." +"</b>" + call.from_user.first_name + "("+ "@" + call.from_user.username +  ")"
   number_result = number_result + 1
   db.execute('UPDATE MOBS SET helpers = %s  WHERE link = %s',(result,call.data))
   conn.commit()
   db.execute('UPDATE MOBS SET helpers_number = %s  WHERE link = %s',(number_result,call.data))
   RoyalTrident_bot.edit_message_reply_markup(call.message.chat.id,call.message.message_id,reply_markup = mobs_markups("⚔️ В бой","🤝 Помогаю",call.data) )
-
-
 
 def find_mobs_message(message):
   timer = 180
@@ -39,6 +37,7 @@ def find_mobs_message(message):
   update_mobs_message(link,timer,message.chat.id,message_for_update.message_id,message.forward_date,mobs_text_parsed)
 
 
+
 def create_mobs_table():
   db.execute(' CREATE TABLE IF NOT EXISTS MOBS (link text, mobs_text text, helpers_number  SMALLINT, helpers text)')
   conn.commit()
@@ -51,11 +50,13 @@ def update_mobs_message(link,timer,message_chat_id,message_id,message_date,mobs_
   while(time.time() - message_date < timer):
     now  = time.time()
     timers = "⏰: " +  "<b>{}</b>".format("{:02d}:{:02d}".format(int((timer - (now  - message_date))/60) , int((timer - (now - message_date))%60)))
-    answer = mobs_text + "\n\n"+ timers + "\n\n"+ "Рыцари по вызову:\n"+ helpers(link)
+    answer = mobs_text + "\n\n"+ timers + "\n\n"+ "<b>👑 Хокаге по вызову:\n</b>"+ helpers(link)
     RoyalTrident_bot.edit_message_text(answer,message_chat_id,message_id,parse_mode = 'HTML',reply_markup = mobs_markups("⚔️ В бой","🤝 Помогаю",link))
     time.sleep(2)
-  answer = mobs_text +"\n\n" + "⏰:РИП\n\n" + helpers(link)
-  RoyalTrident_bot.edit_message_text(answer,message_chat_id,message_id) 
+  answer = mobs_text +"\n\n" + "⏰:РИП\n\n" + "<b>👑 Хокаге по вызову:\n</b>" + helpers(link)
+  while(RoyalTrident_bot.edit_message_text(answer,message_chat_id,message_id,parse_mode = 'HTML') == True):
+    time.sleep(1)
+    RoyalTrident_bot.edit_message_text(answer,message_chat_id,message_id,parse_mode = 'HTML') 
   #delete_mob(link)
   return
 
@@ -87,3 +88,4 @@ def helpers(link):
 def delete_mob(link):
   db.execute('''DELETE FROM MOBS WHERE link = %s''',(link,))
   conn.commit()
+
