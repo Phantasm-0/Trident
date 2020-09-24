@@ -1,4 +1,4 @@
-import time,datetime,multiproccesing,psycopg2б,urllib.parse
+import time,datetime,psycopg2,urllib.parse
 from telebot import types
 
 RoyalTrident_bot = telebot.AsyncTeleBot('1222435814:AAFPEFv8ad_2xBIuYUMc5aIDxqKGhAKRijo')
