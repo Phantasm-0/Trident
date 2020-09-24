@@ -13,23 +13,8 @@ resource_pack = {'Thread': '01','Stick': '02', 'Pelt': '03','Bone': '04','Coal':
 res_list = resource_pack.keys()
 
 @RoyalTrident_bot.callback_query_handler(func=lambda call: True)
-<<<<<<< HEAD
-def update_helpers(call):
-  RoyalTrident_bot.answer_callback_query(call.id)
-  db.execute('SELECT helpers_number FROM MOBS helpers_number WHERE link = %s',(call.data,))
-  number_result = db.fetchone()
-  number_result = number_result[0] + 1
-  db.execute('SELECT helpers FROM MOBS  WHERE link = %s',(call.data,))
-  result = db.fetchone()
-  result = str(result[0])  + "<b>" + str(number_result) + "." +"</b>" + call.from_user.first_name + "("+ "@" + call.from_user.username +  ")"
-  number_result = number_result + 1
-  db.execute('UPDATE MOBS SET helpers = %s  WHERE link = %s',(result,call.data))
-  conn.commit()
-  db.execute('UPDATE MOBS SET helpers_number = %s  WHERE link = %s',(number_result,call.data))
-  RoyalTrident_bot.edit_message_reply_markup(call.message.chat.id,call.message.message_id,reply_markup = mobs_markups("⚔️ В бой","🤝 Помогаю",call.data) )
-=======
 update_helpers(call)
->>>>>>> f2946d7... mobs update 00/1
+
 
 
 
