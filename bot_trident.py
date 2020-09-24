@@ -2,7 +2,7 @@
 import telebot,psycopg2, time, logging,htmlentities,re,urllib.parse
 from psycopg2 import sql
 from telebot import types 
-from mobs.py import find_mobs_message,update_helpers,create_mobs_table
+from mobs.py import create_mobs_table, delete_table,update_mobs_message,mobs_markups, mobs_text,helpers,delete_mob
 
 
 
@@ -13,7 +13,19 @@ resource_pack = {'Thread': '01','Stick': '02', 'Pelt': '03','Bone': '04','Coal':
 res_list = resource_pack.keys()
 
 @RoyalTrident_bot.callback_query_handler(func=lambda call: True)
-update_helpers(call)
+def update_helpers(call):
+  RoyalTrident_bot.answer_callback_query(call.id)
+  db.execute('SELECT helpers_number FROM MOBS helpers_number WHERE link = %s',(call.data,))
+  number_result = db.fetchone()
+  number_result = number_result[0] + 1
+  db.execute('SELECT helpers FROM MOBS  WHERE link = %s',(call.data,))
+  result = db.fetchone()
+  result = str(result[0])  + "<b>" + str(number_result) + "." +"</b>" + call.from_user.first_name + "("+ "@" + call.from_user.username +  ")"
+  number_result = number_result + 1
+  db.execute('UPDATE MOBS SET helpers = %s  WHERE link = %s',(result,call.data))
+  conn.commit()
+  db.execute('UPDATE MOBS SET helpers_number = %s  WHERE link = %s',(number_result,call.data))
+  RoyalTrident_bot.edit_message_reply_markup(call.message.chat.id,call.message.message_id,reply_markup = mobs_markups("⚔️ В бой","🤝 Помогаю",call.data) )
 
 
 
@@ -21,7 +33,23 @@ update_helpers(call)
 
 
 @RoyalTrident_bot.message_handler(func = lambda message: message.forward_from is not None and message.forward_from.username == "ChatWarsBot",regexp = "Ты заметил враждебных существ. " )
-find_mobs_message(message)
+def find_mobs_message(message):
+  timer = 180
+  if(re.search("It's an ambush!",message.text)):
+    timer = 300
+  link = re.search("\/fight.{1,100}",message.text)
+  link = link.group(0)
+  url_link = urllib.parse.quote(link,)
+  mobs_text_parsed = mobs_text(message.text)
+  markup = mobs_markups("🤝 Помогаю","⚔️ В бой",link)
+  answer_html = 'https://t.me/share/url?url=' + url_link 
+  message_for_update = RoyalTrident_bot.send_message(message.chat.id,mobs_text(message.text),reply_markup = markup)
+  message_for_update = message_for_update.wait()
+  db.execute(sql.SQL('''INSERT INTO MOBS (link,helpers_number,helpers) VALUES (%s,%s,%s)''') ,(link,0,"\n"))
+  conn.commit()
+  db.execute('SELECT helpers_number FROM MOBS helpers_number WHERE link = %s',(link,))
+  number_result = db.fetchone()
+  update_mobs_message(link,timer,message.chat.id,message_for_update.message_id,message.forward_date,mobs_text_parsed)
 
 
 
