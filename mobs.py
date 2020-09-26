@@ -50,12 +50,11 @@ def update_mobs_message(link,timer,message_chat_id,message_id,message_date,mobs_
 	    now  = time.time()	
 	    timers = "⏰: " +  "<b>{}</b>".format("{:02d}:{:02d}".format(int((timer - (now  - message_date))/60) , int((timer - (now - message_date))%60)))
 	    answer = mobs_text + "\n\n"+ timers + "\n\n"+ "<b>👑 Хокаге по вызову:\n</b>"+ helpers(link)
-	    RoyalTrident_bot.edit_message_text(answer,message_chat_id,message_id,parse_mode = 'HTML',reply_markup = mobs_markups("⚔️ В бой","🤝 Помогаю",link))
-	    while(type(RoyalTrident_bot.edit_message_text(answer,message_chat_id,message_id,parse_mode = 'HTML',reply_markup = mobs_markups("⚔️ В бой","🤝 Помогаю",link))) == "bool"):
-	      time.sleep(random.randint(1,10))
+	    if(type(RoyalTrident_bot.edit_message_text(answer,message_chat_id,message_id,parse_mode = 'HTML',reply_markup = mobs_markups("⚔️ В бой","🤝 Помогаю",link))) == "bool"):
+	      time.sleep(random.randint(2,4))
   answer = mobs_text +"\n\n" + "⏰:РИП\n\n" + "<b>👑 Хокаге по вызову:\n</b>" + helpers(link)
   while(type(RoyalTrident_bot.edit_message_text(answer,message_chat_id,message_id,parse_mode = 'HTML')) == "bool"):
-    time.sleep(random.randint(1,3))
+    time.sleep(random.randint(2,4))
     RoyalTrident_bot.edit_message_text(answer,message_chat_id,message_id,parse_mode = 'HTML') 
   #delete_mob(link)
   return
