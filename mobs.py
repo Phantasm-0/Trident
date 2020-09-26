@@ -1,4 +1,4 @@
-import time,datetime,psycopg2,urllib.parse,telebot,re
+import time,datetime,psycopg2,urllib.parse,telebot,re,random
 from telebot import types
 
 RoyalTrident_bot = telebot.AsyncTeleBot('1222435814:AAFPEFv8ad_2xBIuYUMc5aIDxqKGhAKRijo')
@@ -47,14 +47,15 @@ def delete_table():
 
 def update_mobs_message(link,timer,message_chat_id,message_id,message_date,mobs_text):
   while(time.time() - message_date < timer):
-    now  = time.time()
+    now  = time.time()	
     timers = "⏰: " +  "<b>{}</b>".format("{:02d}:{:02d}".format(int((timer - (now  - message_date))/60) , int((timer - (now - message_date))%60)))
     answer = mobs_text + "\n\n"+ timers + "\n\n"+ "<b>👑 Хокаге по вызову:\n</b>"+ helpers(link)
     RoyalTrident_bot.edit_message_text(answer,message_chat_id,message_id,parse_mode = 'HTML',reply_markup = mobs_markups("⚔️ В бой","🤝 Помогаю",link))
-    time.sleep(2)
+    while(type(RoyalTrident_bot.edit_message_text(answer,message_chat_id,message_id,parse_mode = 'HTML')) == "bool"):
+    time.sleep(random.randint(1,3))
   answer = mobs_text +"\n\n" + "⏰:РИП\n\n" + "<b>👑 Хокаге по вызову:\n</b>" + helpers(link)
-  while(RoyalTrident_bot.edit_message_text(answer,message_chat_id,message_id,parse_mode = 'HTML') == True):
-    time.sleep(1)
+  while(type(RoyalTrident_bot.edit_message_text(answer,message_chat_id,message_id,parse_mode = 'HTML')) == "bool"):
+    time.sleep(random.randint(1,3))
     RoyalTrident_bot.edit_message_text(answer,message_chat_id,message_id,parse_mode = 'HTML') 
   #delete_mob(link)
   return
