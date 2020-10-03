@@ -3,7 +3,7 @@ import telebot,psycopg2, time, logging,htmlentities,re,urllib.parse,mobs
 from psycopg2 import sql
 from telebot import types 
 from mobs import create_mobs_table, delete_table,update_mobs_message,mobs_markups, mobs_text,helpers,delete_mob
-
+from stock import stock
 
 
 RoyalTrident_bot = telebot.AsyncTeleBot('1222435814:AAFPEFv8ad_2xBIuYUMc5aIDxqKGhAKRijo')
@@ -57,90 +57,14 @@ def find_mobs_message(message):
 
 
 @RoyalTrident_bot.message_handler(func = lambda message: message.forward_from is not None and message.forward_from.username == "ChatWarsBot")
-def stock(message):
-  text = message.text
-  g_withdraw = "/g_withdraw "
-  g_deposit = "/g_deposit "
-  answer = ""
-  result_list = []
-  html_start_string = '<a href="https://t.me/share/url?url='
-
-  if((re.search("Встреча",text) is not None) or(re.search("Deposited",text) is not None) or (re.search("Ты заметил враждебных существ",text) is not None) or (re.search("Получено:",text) is not None)):
-    return
-
-
-
-  if(re.search("На верстаке ты видишь:",text) is not None):
-    result_list = re.findall(".{1,40}",text)
-    for i in result_list: 
-       for g  in res_list:
-        full_search = g + "\sx\s\d{1,4}$"
-        if(re.search(full_search,i)):
-          result = re.search(full_search,i)
-          result_answer = result.group(0)
-          res_name = g
-          res_id = resource_pack.get(res_name)
-          amount = re.search("\d{1,3}",result_answer)
-          amount_answer = amount.group(0)
-          answer_url = g_deposit  + str(res_id) + " " + amount_answer
-          answer_url = urllib.parse.quote(answer_url)
-          answer_name = g + "(" +  amount_answer +")"
-          print(result_answer +"/n" + str(res_id) +"/n" + amount_answer + "/n"+ answer_url +"/n" + answer_name)
-          answer += html_start_string + answer_url + '">'+ answer_name + '</a>'+ '\n'
-
-
-  elif((re.search("Not enough materials",text)is not None ) or (re.search("Не хватает материалов для крафта",text) is not None)):
-      
-      tmp = re.findall("\s.*",text)
-      print(tmp)
-      for z in tmp:
-          if ( z == "\nIn your stock:"):
-              result_list = tmp
-              break
-          tmp.pop(0)
-            
-      for i in result_list: 
-           for g in res_list:
-             full_search = "\d{1,4}\sx\s" + g
-             if(re.search(full_search,i)):
-              result = re.search(full_search,i)
-              result_answer = result.group(0)
-              res_name = g
-              res_id = resource_pack.get(res_name)
-              amount = re.search("\d{1,4}",result_answer)
-              amount_answer = amount.group(0)
-              answer_url = g_withdraw + str(res_id) + " " + amount_answer
-              answer_url = urllib.parse.quote(answer_url)
-              answer_name = g + "(" +  amount_answer +")"
-              print(result_answer +"/n" + str(res_id) +"/n" + amount_answer + "/n"+ answer_url +"/n" + answer_name)
-              answer += html_start_string + answer_url + '">'+ answer_name + '</a>'+ '\n'
-
-
-  else:
-       result_list = re.findall(".{1,40}",text)
-       for i in result_list: 
-           for g in res_list:
-             full_search = g +"\s\(\d{1,4}\)"
-             if(re.search(full_search,i)):
-              result = re.search(full_search,i)
-              result_answer = result.group(0)
-              res_name = g
-              res_id = resource_pack.get(res_name)
-              amount = re.search("\d{1,4}",result_answer)
-              amount_answer = amount.group(0)
-              answer_url = g_deposit  + str(res_id) + " " + amount_answer
-              answer_url = urllib.parse.quote(answer_url)
-              answer_name = g + "(" +  amount_answer +")"
-              print(result_answer +"/n" + str(res_id) +"/n" + amount_answer + "/n"+ answer_url +"/n" + answer_name)
-              answer += html_start_string + answer_url + '">'+ answer_name + '</a>'+ '\n'
-
-  RoyalTrident_bot.send_message(message.chat.id,answer,parse_mode = 'HTML')
+def decorated_stock(message):
+    stock(message)
 
 
     
 
 
-@RoyalTrident_bot.message_handler(regexp="^[дД]ай\s")
+@RoyalTrident_bot.message_handler(regexp="^([дД]ай|[Ll]fq)\s")
 def give_any(message):
   text = message.text
   g_withdraw ="/g_withdraw"
