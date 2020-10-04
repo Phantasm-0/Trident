@@ -2,7 +2,7 @@
 import telebot,psycopg2, time, logging,htmlentities,re,urllib.parse,mobs
 from psycopg2 import sql
 from telebot import types 
-from mobs import create_mobs_tables, delete_table,update_mobs_message,mobs_markups, mobs_text,helpers,delete_mob
+from mobs import create_mobs_tables, delete_table,update_helpers,mobs_markups, mobs_text,helpers,delete_mob,find_mobs_message
 from stock import stock
 
 
