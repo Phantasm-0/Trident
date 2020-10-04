@@ -418,54 +418,54 @@ res_list = resource_pack.keys()
 
 
 def stock(message):
-  text = message.text
-  give_all = str()
-  g_withdraw = "/g_withdraw "
-  g_deposit = "/g_deposit "
-  answer = ""
-  result_list = []
-  html_start_string = '<a href="https://t.me/share/url?url='
+	text = message.text
+	give_all = str()
+	g_withdraw = "/g_withdraw "
+	g_deposit = "/g_deposit "
+	answer = ""
+	result_list = []
+	html_start_string = '<a href="https://t.me/share/url?url='
 
-  if((re.search("Встреча",text) is not None) or(re.search("Deposited",text) is not None) or (re.search("Ты заметил враждебных существ",text) is not None) or (re.search("Получено:",text) is not None)):
-    return
+	if((re.search("Встреча",text) is not None) or(re.search("Deposited",text) is not None) or (re.search("Ты заметил враждебных существ",text) is not None) or (re.search("Получено:",text) is not None)):
+    	return
 
-  if(re.search("На верстаке ты видишь:",text) is not None): #с верстака
-    result_list = re.findall(".{1,40}",text)
-    for i in result_list: 
-       for g  in res_list:
-        full_search = g + "\sx\s\d{1,4}$"
-        if(re.search(full_search,i)):
-          result = re.search(full_search,i)
-          result_answer = result.group(0)
-          res_name = g
-          res_id = resource_pack.get(res_name)
-          amount = re.search("\d{1,3}",result_answer)
-          amount_answer = amount.group(0)
-          answer_url = g_deposit  + str(res_id) + " " + amount_answer
-          answer_url = urllib.parse.quote(answer_url)
-          answer_name = g + "(" +  amount_answer +")"
-          answer += html_start_string + answer_url + '">'+ answer_name + '</a>'+ '\n'
-
-
-  elif((re.search("Не хватает материалов для крафта",text) is not None)): #реинфорс и крафт
-      result_list = re.findall(".{1,40}",text)
-      give_all = give_all_("\d{1,4}\sx\s",result_list)
-
-  elif(re.search("Not enough materials",text) is not None):
-		result_list = re.findall(".{1,40}",text)
-		list_for_deposit = list()
-		for element in result_list:
-			list_for_deposit.append(element)
-			if(str(element)== "In your stock:"):
-				break
-		answer = give_all_("\d{1,4}\sx\s",list_for_deposit,"g_deposit ")
-		give_all = give_all_("\d{1,4}\sx\s",result_list,"g_withdraw ")
+	if(re.search("На верстаке ты видишь:",text) is not None): #с верстака
+	    result_list = re.findall(".{1,40}",text)
+	    for i in result_list: 
+	       for g  in res_list:
+	        full_search = g + "\sx\s\d{1,4}$"
+	        if(re.search(full_search,i)):
+	          result = re.search(full_search,i)
+	          result_answer = result.group(0)
+	          res_name = g
+	          res_id = resource_pack.get(res_name)
+	          amount = re.search("\d{1,3}",result_answer)
+	          amount_answer = amount.group(0)
+	          answer_url = g_deposit  + str(res_id) + " " + amount_answer
+	          answer_url = urllib.parse.quote(answer_url)
+	          answer_name = g + "(" +  amount_answer +")"
+	          answer += html_start_string + answer_url + '">'+ answer_name + '</a>'+ '\n'
 
 
+	elif((re.search("Не хватает материалов для крафта",text) is not None)): #реинфорс и крафт
+	      result_list = re.findall(".{1,40}",text)
+	      give_all = give_all_("\d{1,4}\sx\s",result_list)
+
+	elif((re.search("Not enough materials",text) is not None)):
+			result_list = re.findall(".{1,40}",text)
+			list_for_deposit = list()
+			for element in result_list:
+				list_for_deposit.append(element)
+				if(str(element)== "In your stock:"):
+					break
+			answer = give_all_("\d{1,4}\sx\s",list_for_deposit,"g_deposit ")
+			give_all = give_all_("\d{1,4}\sx\s",result_list,"g_withdraw ")
 
 
 
-  else:
+
+
+	else:
        result_list = re.findall(".{1,40}",text)
        for i in result_list: 
            for g in res_list:
@@ -482,7 +482,7 @@ def stock(message):
               answer_name = g + "(" +  amount_answer +")"
               answer += html_start_string + answer_url + '">'+ answer_name + '</a>'+ '\n'
 
-  RoyalTrident_bot.send_message(message.chat.id,str(answer+'/n/n'+give_all),parse_mode = 'HTML')
+	RoyalTrident_bot.send_message(message.chat.id,str(answer+'/n/n'+give_all),parse_mode = 'HTML')
 
 
 def give_any(message):
