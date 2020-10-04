@@ -53,7 +53,7 @@ def find_mobs_message(message):
 
 
 @RoyalTrident_bot.message_handler(regexp= "[Лл]авки")
-def timed_resolve(message)
+def timed_resolve(message):
     answer =''' Вишня — <a href="http://t.me/share/url?url=/ws_chery">/ws_chery</a>''' + '\n'+ '''Пруфе — <a href="http://t.me/share/url?url=/ws_TWYQ9">/ws_TWYQ9</a>''' + '\n'+'''Мейв — <a href="http://t.me/share/url?url=/ws_FnwIe">/ws_FnwIe</a>'''  + '\n'+ '''Мрак — <a href="http://t.me/share/url?url=/ws_lT0Rm">/ws_lT0Rm</a>''' + '\n'+'''Фарфель — <a href="http://t.me/share/url?url=/ws_XioEX">/ws_XioEX</a>'''
     RoyalTrident_bot.send_message(message.chat.id,answer,parse_mode = 'HTML')
 
