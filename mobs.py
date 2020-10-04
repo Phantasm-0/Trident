@@ -11,7 +11,7 @@ def update_helpers(call):
   number_result = number_result[0] + 1
   db.execute('SELECT helpers FROM MOBS  WHERE link = %s',(call.data,))
   result = db.fetchone()
-  result = str(result[0])  + "\n" + "<b>" + str(number_result) + "." +"</b>" + call.from_user.first_name + "("+ "@" + call.from_user.username +  ")"
+  result = str(result[0])  + "<b>" + str(number_result) + "." +"</b>" + call.from_user.first_name + "("+ "@" + call.from_user.username +  ")"+ "\n" 
   db.execute('UPDATE MOBS SET helpers = %s  WHERE link = %s',(result,call.data))
   conn.commit()
   db.execute('UPDATE MOBS SET helpers_number = %s  WHERE link = %s',(number_result,call.data))
@@ -30,16 +30,11 @@ def find_mobs_message(message):
   answer_html = 'https://t.me/share/url?url=' + url_link 
   message_for_update = RoyalTrident_bot.send_message(message.chat.id,mobs_text(message.text),reply_markup = markup)
   message_for_update = message_for_update.wait()
-  db.execute(sql.SQL('''INSERT INTO MOBS (link,helpers_number,helpers) VALUES (%s,%s,%s)''') ,(link,0,"\n"))
+  db.execute(sql.SQL('''INSERT INTO MOBS (link,helpers_number,helpers) VALUES (%s,%s,%s)''') ,(link,0," "))
   conn.commit()
-  db.execute('SELECT helpers_number FROM MOBS helpers_number WHERE link = %s',(link,))
-  number_result = db.fetchone()
+  db.execute(sql.SQL('''INSERT INTO MOBS_HELPERS (link,helpers_id) VALUES (%s,%s)''') ,(link,message.from_user.id))
+  conn.commit()
   update_mobs_message(link,timer,message.chat.id,message_for_update.message_id,message.forward_date,mobs_text_parsed)
-
-
-def create_mobs_table():
-  db.execute(' CREATE TABLE IF NOT EXISTS MOBS (link text, mobs_text text, helpers_number  SMALLINT, helpers text)')
-  conn.commit()
 
 def delete_table():
     db.execute('DROP TABLE MOBS')
@@ -49,11 +44,11 @@ def update_mobs_message(link,timer,message_chat_id,message_id,message_date,mobs_
   while(time.time() - message_date < timer):
 	    now  = time.time()	
 	    timers = "⏰: " +  "<b>{}</b>".format("{:02d}:{:02d}".format(int((timer - (now  - message_date))/60) , int((timer - (now - message_date))%60)))
-	    answer = mobs_text + "\n\n"+ timers + "\n\n"+ "<b>👑 Хокаге по вызову:\n</b>"+ helpers(link)
+	    answer = mobs_text + "\n"+ timers + "\n\n"+ "<b>👑 Хокаге по вызову:\n</b>"+ helpers(link)
 	    if(type(RoyalTrident_bot.edit_message_text(answer,message_chat_id,message_id,parse_mode = 'HTML',reply_markup = mobs_markups("⚔️ В бой","🤝 Помогаю",link))) == "bool"):
 	     	time.sleep(12)
 	    else:
-	    	time.sleep(2)
+	    	time.sleep(5)
   answer = mobs_text +"\n\n" + "⏰:РИП\n\n" + "<b>👑 Хокаге по вызову:\n</b>" + helpers(link)
   while(type(RoyalTrident_bot.edit_message_text(answer,message_chat_id,message_id,parse_mode = 'HTML')) == "bool"):
     time.sleep(5)
@@ -90,3 +85,8 @@ def delete_mob(link):
   db.execute('''DELETE FROM MOBS WHERE link = %s''',(link,))
   conn.commit()
 
+def create_mobs_tables(link):
+  db.execute(' CREATE TABLE IF NOT EXISTS MOBS (link text, mobs_text text, helpers_number  SMALLINT, helpers text)')
+  conn.commit()
+  db.execute(db.execute(' CREATE TABLE IF NOT EXISTS MOBS_HELPERS (link text,helpers_id text)')
+  conn.commit()
