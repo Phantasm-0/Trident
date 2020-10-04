@@ -447,7 +447,7 @@ def stock(message):
 
 	elif((re.search("Не хватает материалов для крафта",text) is not None)): #реинфорс и крафт
 	      result_list = re.findall(".{1,40}",text)
-	      give_all = give_all_("\d{1,4}\sx\s",result_list)
+	      give_all = give_all_("\d{1,4}\sx\s",result_list,,"/g_withdraw ","Выдать из стока")
 
 	elif((re.search("Not enough materials",text) is not None)):
 			result_list = re.findall(".{1,40}",text)
@@ -532,7 +532,7 @@ def give_additional_any(result,message):
 
 
 
-def give_additional_all(regex,list_for_search,g_what,answer_name ):
+def give_additional_all(regex,list_for_search,g_what,answer_name):
     g_withdraw =  urllib.parse.quote("/g_withdraw ")
     answer_for_send = str()
     html_start_string = '<a href="https://t.me/share/url?url='
@@ -557,8 +557,8 @@ def give_all_(regex,list_for_search,g_what,answer_name):
     answer_for_send = str()
     html_start_string = '<a href="https://t.me/share/url?url='
     additional_any = list()
-    while(len(list_for_search)>18):
-        while (len(additional_any) != 18): 
+    while(len(list_for_search)>9):
+        while (len(additional_any) != 9): 
                additional_any.insert(0, list_for_search.pop(0))
         answer+=give_additional_all(regex,additional_any,g_what)
         additional_any.clear()
