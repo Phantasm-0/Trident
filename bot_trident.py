@@ -358,7 +358,7 @@ def lower_check(table_list,ask):
 
 
 def main():
-  create_mobs_table()
+  create_mobs_tables()
   RoyalTrident_bot.polling(none_stop=True)
 
 
