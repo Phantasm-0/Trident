@@ -447,7 +447,7 @@ def stock(message):
 
 	elif((re.search("Не хватает материалов для крафта",text) is not None)): #реинфорс и крафт
 	      result_list = re.findall(".{1,40}",text)
-	      give_all = give_all_("\d{1,4}\sx\s",result_list,,"/g_withdraw ","Выдать из стока")
+	      give_all = give_all_("\d{1,4}\sx\s",result_list,"/g_withdraw ","Выдать из стока")
 
 	elif((re.search("Not enough materials",text) is not None)):
 			result_list = re.findall(".{1,40}",text)
