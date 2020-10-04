@@ -456,8 +456,8 @@ def stock(message):
 				list_for_deposit.append(element)
 				if(str(element)== "In your stock:"):
 					break
-			answer = give_all_("\d{1,4}\sx\s",list_for_deposit,"g_deposit ")
-			give_all = give_all_("\d{1,4}\sx\s",result_list,"g_withdraw ")
+			answer = give_all_("\d{1,4}\sx\s",list_for_deposit,"/g_deposit ","Cдать в сток")
+			give_all = give_all_("\d{1,4}\sx\s",result_list,"/g_withdraw ","Выдать из стока")
 
 
 
@@ -532,8 +532,7 @@ def give_additional_any(result,message):
 
 
 
-def give_additional_all(regex,list_for_search,g_what):
-    answer_name = "Дать все"
+def give_additional_all(regex,list_for_search,g_what,answer_name ):
     g_withdraw =  urllib.parse.quote("/g_withdraw ")
     answer_for_send = str()
     html_start_string = '<a href="https://t.me/share/url?url='
@@ -552,7 +551,7 @@ def give_additional_all(regex,list_for_search,g_what):
                   answer_for_send += answer_url
     return(html_start_string + g_withdraw + answer_for_send + '">'+ answer_name + '</a>'+ '\n')
 
-def give_all_(regex,list_for_search,g_what):
+def give_all_(regex,list_for_search,g_what,answer_name):
     g_withdraw =  urllib.parse.quote(g_what)
     answer = str()
     answer_for_send = str()
@@ -576,4 +575,4 @@ def give_all_(regex,list_for_search,g_what):
                   answer_url = str(res_id) + " " + amount_answer + " "
                   answer_url = urllib.parse.quote(answer_url)
                   answer_for_send += answer_url
-    return (answer+html_start_string + g_withdraw + answer_for_send + '">'+ "Дать все" + '</a>'+ '\n')
+    return (answer+html_start_string + g_withdraw + answer_for_send + '">'+ answer_name  + '</a>'+ '\n')
