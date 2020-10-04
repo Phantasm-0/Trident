@@ -427,7 +427,7 @@ def stock(message):
 	html_start_string = '<a href="https://t.me/share/url?url='
 
 	if((re.search("Встреча",text) is not None) or(re.search("Deposited",text) is not None) or (re.search("Ты заметил враждебных существ",text) is not None) or (re.search("Получено:",text) is not None)):
-    	return
+		return
 
 	if(re.search("На верстаке ты видишь:",text) is not None): #с верстака
 	    result_list = re.findall(".{1,40}",text)
@@ -466,21 +466,21 @@ def stock(message):
 
 
 	else:
-       result_list = re.findall(".{1,40}",text)
-       for i in result_list: 
-           for g in res_list:
-             full_search = g +"\s\(\d{1,4}\)"     
-             if(re.search(full_search,i)):
-              result = re.search(full_search,i)
-              result_answer = result.group(0)
-              res_name = g
-              res_id = resource_pack.get(res_name)
-              amount = re.search("\d{1,4}",result_answer)
-              amount_answer = amount.group(0)
-              answer_url = g_deposit  + str(res_id) + " " + amount_answer
-              answer_url = urllib.parse.quote(answer_url)
-              answer_name = g + "(" +  amount_answer +")"
-              answer += html_start_string + answer_url + '">'+ answer_name + '</a>'+ '\n'
+		result_list = re.findall(".{1,40}",text)
+		for i in result_list: 
+			for g in res_list:
+				full_search = g +"\s\(\d{1,4}\)"     
+				if(re.search(full_search,i)):
+					result = re.search(full_search,i)
+					result_answer = result.group(0)
+					res_name = g
+					res_id = resource_pack.get(res_name)
+					amount = re.search("\d{1,4}",result_answer)
+					amount_answer = amount.group(0)
+					answer_url = g_deposit  + str(res_id) + " " + amount_answer
+					answer_url = urllib.parse.quote(answer_url)
+					answer_name = g + "(" +  amount_answer +")"
+					answer += html_start_string + answer_url + '">'+ answer_name + '</a>'+ '\n'
 
 	RoyalTrident_bot.send_message(message.chat.id,str(answer+'/n/n'+give_all),parse_mode = 'HTML')
 
