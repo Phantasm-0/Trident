@@ -1,4 +1,4 @@
-import time,datetime,psycopg2,urllib.parse,telebot,re,random
+import urllib.parse,telebot,re,
 from telebot import types
 
 
@@ -224,13 +224,202 @@ resource_pack = {'Thread': '01',
 "Lightning Bow shaft":'k26',
 "Hailstorm Bow shaft":'k27',
 "Imperial Axe head":'k28',
-"Skull Crusher head":'k29',"Dragon Mace head":'k30' ,"Ghost blade":'k31',"Lion blade":'k32' ,"Crusader Armor piece":'k33',"Crusader Helmet fragment":'k34' ,"Crusader Boots part":'k35' ,"Crusader Gauntlets part":'k36' ,"Crusader shield part":'k37',"Royal Armor piece":'k38',"Royal Helmet fragment":'k39',"Royal Boots part":'k40',"Royal Gauntlets part":'k41',"Royal shield part":'k42' ,"Ghost Armor part":'k43',"Ghost Helmet fragment":'k44' ,"Ghost Boots part":'k45' ,"Ghost Gloves part":'k46' ,"Lion Armor part":'k47' ,"Lion Helmet fragment":'k48' ,"Lion Boots part":'k49' ,"Lion Gloves part":'k50' ,"Demon Robe piece":'k51' ,"Demon Circlet fragment":'k52' ,"Demon Shoes part":'k53' ,"Demon Bracers part":'k54' ,"Divine Robe piece":'k55' ,"Divine Circlet fragment":'k56' ,"Divine Shoes part":'k57' ,"Divine Bracers part":'k58' ,"Storm Cloak part":'k59',"Durable Cloak part":'k60'  ,"Blessed Cloak part":'k61' ,"Council Armor part":'k78' ,"Council Helmet part":'k79' ,"Council Boots part":'k80' ,"Council Gauntlets part":'k81',"Council Shield part":'k82' ,"Griffin Armor part":'k83',"Griffin Helmet part":'k84'  ,"Griffin Boots part":'k85' ,"Griffin Gloves part":'k86' ,"Celestial Armor part":'k87' ,"Celestial Helmet part":'k88' ,"Celestial Boots part":'k89' ,"Celestial Bracers part":'k90' ,"Griffin Knife part":'k91' ,"Minotaur Sword part":'k92' ,"Phoenix Sword part":'k93' ,"Heavy Fauchard part":'k94' ,"Guisarme part":'k95' ,"Meteor Bow part":'k96' ,"Nightfall Bow part":'k97' ,"Black Morningstar part":'k98',"Maiming Bulawa part":'k99',"Assault Cape part":'k100' ,"Craftsman Apron part":'k101' ,"Stoneskin Cloak part":'k102' ,"Poniard part":'k103',"Lightbane Katana part":'k104'  ,"Doom Warglaive part": 'k105' ,"Decimation Harpoon part":'k106' ,"Sinister Ranseur part":'k107' ,"Heartstriker Bow part":'k108' ,"Windstalker Bow part":'k109' ,"Malificent Maul part":'k110' ,"Brutalizer Flail part":'k111' ,"Manticore Armor part":'k112' ,"Manticore Helmet part":'k113' ,"Manticore Boots part":'k114' ,"Manticore Gloves part":'k115' ,"Overseer Shield part":'k116' ,"Overseer Armor part":'k117' ,"Overseer Helmet part":'k118' ,"Overseer Boots part":'k119' ,"Overseer Gauntlets part":'k120' ,"Discarnate Robe part":'k121' ,"Discarnate Circlet part":'k122' ,"Discarnate Shoes part":'k123' ,"Discarnate Bracers part":'k124',"Mystery ring":'rng'  ,"Champion Sword recipe":'r01' ,"Trident recipe":'r02' ,"Hunter Bow recipe":'r03' ,"War hammer recipe":'r04' ,"Hunter Dagger recipe":'r05' ,"Order Armor recipe":'r06' ,"Order Helmet recipe":'r07' ,"Order Boots recipe":'r08',"Order Gauntlets recipe":'r09'  ,"Order shield recipe":'r10',"Hunter Armor recipe":'r11' ,"Hunter Helmet recipe":'r12',"Hunter Boots recipe":'r13' ,"Hunter Gloves recipe":'r14' ,"Clarity Robe recipe":'r15' ,"Clarity Circlet recipe":'r16' ,"Clarity Shoes recipe":'r17' ,"Clarity Bracers recipe":'r18' ,"Thundersoul Sword recipe":'r19',"Doomblade Sword recipe":'r20',"Eclipse recipe":'r21',"Guard's Spear recipe":'r22',"King's Defender recipe":'r23',"Raging Lance recipe":'r24',"Composite Bow recipe":'r25',"Lightning Bow recipe":'r26', "Hailstorm Bow recipe":'r27',"Imperial Axe recipe":'r28',"Skull Crusher recipe":'r29',"Dragon Mace recipe":'r30',"Ghost dagger recipe":'r31',"Lion Knife recipe":'r32',"Crusader Armor recipe":'r33',"Crusader Helmet recipe":'r34',"Crusader Boots recipe":'r35',"Crusader Gauntlets recipe":'r36',"Crusader shield recipe":'r37',"Royal Armor recipe":'r38',"Royal Helmet recipe":'r39',"Royal Boots recipe":'r40',"Royal Gauntlets recipe":'r41',"Royal shield recipe":'r42',"Ghost Armor recipe":'r43',"Ghost Helmet recipe":'r44',"Ghost Boots recipe":'r45',"Ghost Gloves recipe":'r46',"Lion Armor recipe":'r47',"Lion Helmet recipe":'r48',"Lion Boots recipe":'r49',"Lion Gloves recipe":'r50',"Demon Robe recipe":'r51',"Demon Circlet recipe":'r52',"Demon Shoes recipe":'r53',"Demon Bracers recipe":'r54',"Divine Robe recipe":'r55',"Divine Circlet recipe":'r56',"Divine Shoes recipe":'r57',"Divine Bracers recipe":'r58',"Storm Cloak recipe":'r59',"Durable Cloak recipe":'r60',"Blessed Cloak recipe":'r61',"Council Armor recipe":'r78',"Council Helmet recipe":'r79' ,"Council Boots recipe":'r80',"Council Gauntlets recipe":'r81' ,"Council Shield recipe":'r82',"Griffin Armor recipe":'r83',"Griffin Helmet recipe":'r84',"Griffin Boots recipe":'r85',"Griffin Gloves recipe":'r86',"Celestial Armor recipe":'r87',"Celestial Helmet recipe":'r88',"Celestial Boots recipe":'r89',"Celestial Bracers recipe":'r90',"Griffin Knife recipe":'r91',"Minotaur Sword recipe":'r92',"Phoenix Sword recipe":'r93',"Heavy Fauchard recipe":'r94',"Guisarme recipe":'r95',"Meteor Bow recipe":'r96',"Nightfall Bow recipe":'r97',"Black Morningstar recipe":'r98',"Maiming Bulawa recipe":'r99',"Assault Cape recipe":'r100',"Craftsman Apron recipe":'r101',"Stoneskin Cloak recipe":'r102',"Poniard recipe":'r103',"Lightbane Katana recipe":'r104',"Doom Warglaive recipe":'r105' ,"Decimation Harpoon recipe":'r106',"Sinister Ranseur recipe":'r107',"Heartstriker Bow recipe":'r108',"Windstalker Bow recipe":'r109',"Malificent Maul recipe":'r110' ,"Brutalizer Flail recipe":'r111',"Manticore Armor recipe":'r112' ,"Manticore Helmet recipe":'r113',"Manticore Boots recipe":'r114',"Manticore Gloves recipe":'r115',"Overseer Armor recipe":'r116',"Overseer Helmet recipe":'r117',"Overseer Boots recipe":'r118',"Overseer Gauntlets recipe":'r119',"Overseer Shield recipe":'r120',"Discarnate Robe recipe":'r121' ,"Discarnate Circlet recipe":'r122',"Discarnate Shoes recipe":'r123',"Discarnate Bracers recipe":'r124'}
+"Skull Crusher head":'k29',
+"Dragon Mace head":'k30',
+"Ghost blade":'k31',
+"Lion blade":'k32',
+"Crusader Armor piece":'k33',
+"Crusader Helmet fragment":'k34',
+"Crusader Boots part":'k35',
+"Crusader Gauntlets part":'k36',
+"Crusader shield part":'k37',
+"Royal Armor piece":'k38',
+"Royal Helmet fragment":'k39',
+"Royal Boots part":'k40',
+"Royal Gauntlets part":'k41',
+"Royal shield part":'k42',
+"Ghost Armor part":'k43',
+"Ghost Helmet fragment":'k44',
+"Ghost Boots part":'k45',
+"Ghost Gloves part":'k46',
+"Lion Armor part":'k47',
+"Lion Helmet fragment":'k48',
+"Lion Boots part":'k49',
+"Lion Gloves part":'k50',
+"Demon Robe piece":'k51',
+"Demon Circlet fragment":'k52',
+"Demon Shoes part":'k53',
+"Demon Bracers part":'k54',
+"Divine Robe piece":'k55',
+"Divine Circlet fragment":'k56',
+"Divine Shoes part":'k57',
+"Divine Bracers part":'k58',
+"Storm Cloak part":'k59',
+"Durable Cloak part":'k60',
+"Blessed Cloak part":'k61',
+"Council Armor part":'k78',
+"Council Helmet part":'k79',
+"Council Boots part":'k80',
+"Council Gauntlets part":'k81',
+"Council Shield part":'k82',
+"Griffin Armor part":'k83',
+"Griffin Helmet part":'k84',
+"Griffin Boots part":'k85',
+"Griffin Gloves part":'k86',
+"Celestial Armor part":'k87',
+"Celestial Helmet part":'k88',
+"Celestial Boots part":'k89',
+"Celestial Bracers part":'k90',
+"Griffin Knife part":'k91',
+"Minotaur Sword part":'k92',
+"Phoenix Sword part":'k93',
+"Heavy Fauchard part":'k94',
+"Guisarme part":'k95',
+"Meteor Bow part":'k96',
+"Nightfall Bow part":'k97',
+"Black Morningstar part":'k98',
+"Maiming Bulawa part":'k99',
+"Assault Cape part":'k100',
+"Craftsman Apron part":'k101',
+"Stoneskin Cloak part":'k102',
+"Poniard part":'k103',
+"Lightbane Katana part":'k104',
+"Doom Warglaive part": 'k105',
+"Decimation Harpoon part":'k106',
+"Sinister Ranseur part":'k107',
+"Heartstriker Bow part":'k108',
+"Windstalker Bow part":'k109',
+"Malificent Maul part":'k110',
+"Brutalizer Flail part":'k111',
+"Manticore Armor part":'k112',
+"Manticore Helmet part":'k113',
+"Manticore Boots part":'k114',
+"Manticore Gloves part":'k115',
+"Overseer Shield part":'k116',
+"Overseer Armor part":'k117',
+"Overseer Helmet part":'k118',
+"Overseer Boots part":'k119',
+"Overseer Gauntlets part":'k120',
+"Discarnate Robe part":'k121',
+"Discarnate Circlet part":'k122',
+"Discarnate Shoes part":'k123',
+"Discarnate Bracers part":'k124',
+"Mystery ring":'rng',
+"Champion Sword recipe":'r01',
+"Trident recipe":'r02',
+"Hunter Bow recipe":'r03',
+"War hammer recipe":'r04',
+"Hunter Dagger recipe":'r05',
+"Order Armor recipe":'r06',
+"Order Helmet recipe":'r07',
+"Order Boots recipe":'r08',
+"Order Gauntlets recipe":'r09',
+"Order shield recipe":'r10',
+"Hunter Armor recipe":'r11',
+"Hunter Helmet recipe":'r12',
+"Hunter Boots recipe":'r13',
+"Hunter Gloves recipe":'r14',
+"Clarity Robe recipe":'r15',
+"Clarity Circlet recipe":'r16',
+"Clarity Shoes recipe":'r17',
+"Clarity Bracers recipe":'r18',
+"Thundersoul Sword recipe":'r19',
+"Doomblade Sword recipe":'r20',
+"Eclipse recipe":'r21',
+"Guard's Spear recipe":'r22',
+"King's Defender recipe":'r23',
+"Raging Lance recipe":'r24',
+"Composite Bow recipe":'r25',
+"Lightning Bow recipe":'r26',
+"Hailstorm Bow recipe":'r27',
+"Imperial Axe recipe":'r28',
+"Skull Crusher recipe":'r29',
+"Dragon Mace recipe":'r30',
+"Ghost dagger recipe":'r31',
+"Lion Knife recipe":'r32',
+"Crusader Armor recipe":'r33',
+"Crusader Helmet recipe":'r34',
+"Crusader Boots recipe":'r35',
+"Crusader Gauntlets recipe":'r36',
+"Crusader shield recipe":'r37',
+"Royal Armor recipe":'r38',
+"Royal Helmet recipe":'r39',
+"Royal Boots recipe":'r40',
+"Royal Gauntlets recipe":'r41',
+"Royal shield recipe":'r42',
+"Ghost Armor recipe":'r43',
+"Ghost Helmet recipe":'r44',
+"Ghost Boots recipe":'r45',
+"Ghost Gloves recipe":'r46',
+"Lion Armor recipe":'r47',
+"Lion Helmet recipe":'r48',
+"Lion Boots recipe":'r49',
+"Lion Gloves recipe":'r50',
+"Demon Robe recipe":'r51',
+"Demon Circlet recipe":'r52',
+"Demon Shoes recipe":'r53',
+"Demon Bracers recipe":'r54',
+"Divine Robe recipe":'r55',
+"Divine Circlet recipe":'r56',
+"Divine Shoes recipe":'r57',
+"Divine Bracers recipe":'r58',
+"Storm Cloak recipe":'r59',
+"Durable Cloak recipe":'r60',
+"Blessed Cloak recipe":'r61',
+"Council Armor recipe":'r78',
+"Council Helmet recipe":'r79',
+"Council Boots recipe":'r80',
+"Council Gauntlets recipe":'r81',
+"Council Shield recipe":'r82',
+"Griffin Armor recipe":'r83',
+"Griffin Helmet recipe":'r84',
+"Griffin Boots recipe":'r85',
+"Griffin Gloves recipe":'r86',
+"Celestial Armor recipe":'r87',
+"Celestial Helmet recipe":'r88',
+"Celestial Boots recipe":'r89',
+"Celestial Bracers recipe":'r90',
+"Griffin Knife recipe":'r91',
+"Minotaur Sword recipe":'r92',
+"Phoenix Sword recipe":'r93',
+"Heavy Fauchard recipe":'r94',
+"Guisarme recipe":'r95',
+"Meteor Bow recipe":'r96',
+"Nightfall Bow recipe":'r97',
+"Black Morningstar recipe":'r98',
+"Maiming Bulawa recipe":'r99',
+"Assault Cape recipe":'r100',
+"Craftsman Apron recipe":'r101',
+"Stoneskin Cloak recipe":'r102',
+"Poniard recipe":'r103',
+"Lightbane Katana recipe":'r104',
+"Doom Warglaive recipe":'r105',
+"Decimation Harpoon recipe":'r106',
+"Sinister Ranseur recipe":'r107',
+"Heartstriker Bow recipe":'r108',
+"Windstalker Bow recipe":'r109',
+"Malificent Maul recipe":'r110',
+"Brutalizer Flail recipe":'r111',
+"Manticore Armor recipe":'r112',
+"Manticore Helmet recipe":'r113',
+"Manticore Boots recipe":'r114',
+"Manticore Gloves recipe":'r115',
+"Overseer Armor recipe":'r116',
+"Overseer Helmet recipe":'r117',
+"Overseer Boots recipe":'r118',
+"Overseer Gauntlets recipe":'r119',
+"Overseer Shield recipe":'r120',
+"Discarnate Robe recipe":'r121',
+"Discarnate Circlet recipe":'r122',
+"Discarnate Shoes recipe":'r123',
+"Discarnate Bracers recipe":'r124'}
 res_list = resource_pack.keys()
 
 
 
 def stock(message):
   text = message.text
+  give_all = str()
   g_withdraw = "/g_withdraw "
   g_deposit = "/g_deposit "
   answer = ""
@@ -240,7 +429,7 @@ def stock(message):
   if((re.search("Встреча",text) is not None) or(re.search("Deposited",text) is not None) or (re.search("Ты заметил враждебных существ",text) is not None) or (re.search("Получено:",text) is not None)):
     return
 
-  if(re.search("На верстаке ты видишь:",text) is not None):
+  if(re.search("На верстаке ты видишь:",text) is not None): #с верстака
     result_list = re.findall(".{1,40}",text)
     for i in result_list: 
        for g  in res_list:
@@ -255,35 +444,32 @@ def stock(message):
           answer_url = g_deposit  + str(res_id) + " " + amount_answer
           answer_url = urllib.parse.quote(answer_url)
           answer_name = g + "(" +  amount_answer +")"
-          print(result_answer +"/n" + str(res_id) +"/n" + amount_answer + "/n"+ answer_url +"/n" + answer_name)
           answer += html_start_string + answer_url + '">'+ answer_name + '</a>'+ '\n'
 
 
-  elif((re.search("Not enough materials",text)is not None ) or (re.search("Не хватает материалов для крафта",text) is not None)):
-      
-      result_list = re.findall(".{1,40}",text)         
-      for i in result_list: 
-           for g in res_list:
-             full_search = "\d{1,4}\sx\s" + g
-             if(re.search(full_search,i)):
-              result = re.search(full_search,i)
-              result_answer = result.group(0)
-              res_name = g
-              res_id = resource_pack.get(res_name)
-              amount = re.search("\d{1,4}",result_answer)
-              amount_answer = amount.group(0)
-              answer_url = g_withdraw + str(res_id) + " " + amount_answer
-              answer_url = urllib.parse.quote(answer_url)
-              answer_name = g + "(" +  amount_answer +")"
-              print(result_answer +"/n" + str(res_id) +"/n" + amount_answer + "/n"+ answer_url +"/n" + answer_name)
-              answer += html_start_string + answer_url + '">'+ answer_name + '</a>'+ '\n'
+  elif((re.search("Не хватает материалов для крафта",text) is not None)): #реинфорс и крафт
+      result_list = re.findall(".{1,40}",text)
+      give_all = give_all_("\d{1,4}\sx\s",result_list)
+
+  elif(re.search("Not enough materials",textis not None):
+  	  result_list = re.findall(".{1,40}",text)
+	  list_for_deposit = list()
+      for element in result_list:
+        list_for_deposit.append(element)
+        if(str(element)== "In your stock:"):
+			break
+      answer = give_all_("\d{1,4}\sx\s",list_for_deposit,"g_deposit ")
+      give_all = give_all_("\d{1,4}\sx\s",result_list,"g_withdraw ")
+
+
+
 
 
   else:
        result_list = re.findall(".{1,40}",text)
        for i in result_list: 
            for g in res_list:
-             full_search = g +"\s\(\d{1,4}\)"
+             full_search = g +"\s\(\d{1,4}\)"     
              if(re.search(full_search,i)):
               result = re.search(full_search,i)
               result_answer = result.group(0)
@@ -294,10 +480,9 @@ def stock(message):
               answer_url = g_deposit  + str(res_id) + " " + amount_answer
               answer_url = urllib.parse.quote(answer_url)
               answer_name = g + "(" +  amount_answer +")"
-              print(result_answer +"/n" + str(res_id) +"/n" + amount_answer + "/n"+ answer_url +"/n" + answer_name)
               answer += html_start_string + answer_url + '">'+ answer_name + '</a>'+ '\n'
 
-  RoyalTrident_bot.send_message(message.chat.id,answer,parse_mode = 'HTML')
+  RoyalTrident_bot.send_message(message.chat.id,str(answer+'/n/n'+give_all),parse_mode = 'HTML')
 
 
 def give_any(message):
@@ -346,3 +531,51 @@ def give_additional_any(result,message):
     answer_url = urllib.parse.quote(answer,)
     answer_html = '<a href="https://t.me/share/url?url=' + answer_url +  '">'+ answer + '</a>'
     RoyalTrident_bot.send_message(message.chat.id,answer_html,parse_mode = 'HTML')
+
+
+
+def give_additional_all(regex,list_for_search,g_what):
+    answer_name = "Дать все"
+    g_withdraw =  urllib.parse.quote("/g_withdraw ")
+    answer_for_send = str()
+    html_start_string = '<a href="https://t.me/share/url?url='
+    for i in list_for_search: 
+        for g in res_list:
+             full_search = regex + g + "$"
+             if(re.search(full_search,i)):
+                  result = re.search(full_search,i)
+                  result_answer = result.group(0)
+                  res_name = g
+                  res_id = resource_pack.get(res_name)
+                  amount = re.search("\d{1,4}",result_answer)
+                  amount_answer = amount.group(0)
+                  answer_url = str(res_id) + " " + amount_answer + " "
+                  answer_url = urllib.parse.quote(answer_url)
+                  answer_for_send += answer_url
+    return(html_start_string + g_withdraw + answer_for_send + '">'+ answer_name + '</a>'+ '\n')
+
+def give_all_(regex,list_for_search,g_what):
+    g_withdraw =  urllib.parse.quote(g_what)
+    answer = str()
+    answer_for_send = str()
+    html_start_string = '<a href="https://t.me/share/url?url='
+    additional_any = list()
+    while(len(list_for_search)>18):
+        while (len(additional_any) != 18): 
+               additional_any.insert(0, list_for_search.pop(0))
+        answer+=give_additional_all(regex,additional_any,g_what)
+        additional_any.clear()
+    for i in list_for_search: 
+          for g in res_list:
+             full_search = regex + g + "$"
+             if(re.search(full_search,i)):
+                  result = re.search(full_search,i)
+                  result_answer = result.group(0)
+                  res_name = g
+                  res_id = resource_pack.get(res_name)
+                  amount = re.search("\d{1,4}",result_answer)
+                  amount_answer = amount.group(0)
+                  answer_url = str(res_id) + " " + amount_answer + " "
+                  answer_url = urllib.parse.quote(answer_url)
+                  answer_for_send += answer_url
+    return (answer+html_start_string + g_withdraw + answer_for_send + '">'+ "Дать все" + '</a>'+ '\n')
