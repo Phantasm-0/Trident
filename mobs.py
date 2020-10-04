@@ -88,5 +88,5 @@ def delete_mob(link):
 def create_mobs_tables(link):
   db.execute(' CREATE TABLE IF NOT EXISTS MOBS (link text, mobs_text text, helpers_number  SMALLINT, helpers text)')
   conn.commit()
-  db.execute(db.execute(' CREATE TABLE IF NOT EXISTS MOBS_HELPERS (link text,helpers_id text)')
+  db.execute(' CREATE TABLE IF NOT EXISTS MOBS_HELPERS (link text,helpers_id text)')
   conn.commit()
