@@ -1,4 +1,4 @@
-import urllib.parse,telebot,re,
+import urllib.parse,telebot,re
 from telebot import types
 
 
@@ -451,7 +451,7 @@ def stock(message):
       result_list = re.findall(".{1,40}",text)
       give_all = give_all_("\d{1,4}\sx\s",result_list)
 
-  elif(re.search("Not enough materials",textis not None):
+  elif(re.search("Not enough materials",text is not None):
   	  result_list = re.findall(".{1,40}",text)
 	  list_for_deposit = list()
       for element in result_list:
