@@ -480,7 +480,7 @@ def stock(message):
 					answer_name = g + "(" +  amount_answer +")"
 					answer += html_start_string + answer_url + '">'+ answer_name + '</a>'+ '\n'
 
-	RoyalTrident_bot.send_message(message.chat.id,str(answer+'/n/n'+give_all),parse_mode = 'HTML')
+	RoyalTrident_bot.send_message(message.chat.id,str(answer+'\n\n'+give_all),parse_mode = 'HTML')
 
 
 def give_any(message):
