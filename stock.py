@@ -1,4 +1,4 @@
-import urllib.parse,telebot,re,
+import urllib.parse,telebot,re
 from telebot import types
 
 
