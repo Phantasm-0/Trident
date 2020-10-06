@@ -572,7 +572,7 @@ def give_all_(regex,list_for_search,g_what,answer_name):
     while(len(list_for_search)>9):
         while (len(additional_any) != 9): 
                additional_any.insert(0, list_for_search.pop(0))
-        answer+=give_additional_all(regex,additional_any,g_what)
+        answer+=give_additional_all(regex,additional_any,g_withdraw,"Сдать в сток")
         additional_any.clear()
     for i in list_for_search: 
           for g in res_list:
