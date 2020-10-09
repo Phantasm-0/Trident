@@ -1,13 +1,12 @@
 #!/usr/bin/env python3
-import telebot,psycopg2, time, logging,htmlentities,re,urllib.parse,mobs
+import telebot, psycopg2, time, htmlentities, re, urllib.parse
 from psycopg2 import sql
-from telebot import types 
-from mobs import create_mobs_tables, delete_table,update_helpers,mobs_markups, mobs_text,helpers,delete_mob,find_mobs_message
+from mobs import create_mobs_tables, update_helpers, find_mobs_message
 from stock import stock
 
 
-RoyalTrident_bot = telebot.AsyncTeleBot('1222435814:AAFPEFv8ad_2xBIuYUMc5aIDxqKGhAKRijo')
-conn = psycopg2.connect(database='postgres', user='postgres', password='123Anapa2017', host='localhost',port = 5432)
+RoyalTrident_bot = telebot.AsyncTeleBot('1125612607:AAG4o5Myw3TB8ZnYfBbnRMZ0AdW_YG1EVMQ')
+conn = psycopg2.connect(database='postgres', user="Phantasm", password='123Anapa2017', host='localhost', port = 5432)
 db = conn.cursor()
 
 @RoyalTrident_bot.callback_query_handler(func=lambda call: True)
@@ -15,10 +14,7 @@ def decorated_update_helpers(call):
   update_helpers(call)
 
 
-
-
-
-@RoyalTrident_bot.message_handler(func = lambda message: message.forward_from is not None and message.forward_from.username == "ChatWarsBot",regexp = "Ты заметил враждебных существ. " )
+@RoyalTrident_bot.message_handler(func=lambda message: message.forward_from is not None and message.forward_from.username == "ChatWarsBot",regexp = "Ты заметил враждебных существ. " )
 def decorated_find_mobs_message(message):
   find_mobs_message(message)
 
@@ -77,6 +73,7 @@ def give_any(message):
 
 @RoyalTrident_bot.message_handler(commands = ['info'])
 def info(message):
+    message_str = str()
     reply = message.reply_to_message
     chat_id = str(message.chat.id)
     if(reply is None):
@@ -143,6 +140,7 @@ def show_triggers(message):
 
 @RoyalTrident_bot.message_handler (commands = ['add_trigger'])
 def add_trigger(message):
+    try:
       chat_id = str(message.chat.id)
       create_table_chat_id(chat_id)
       reply = message.reply_to_message
@@ -151,6 +149,9 @@ def add_trigger(message):
       ask_result = re.search(".*",ask)
       ask = ask_result.group(0)
       ask = ask[1:]
+    except:
+      RoyalTrident_bot.send_message(450927903, chat_id + "\n" + reply + "\n" + ask_result + "\n" + ask)
+
       if(reply is None or (len(message.text) < 14)):
         return 
       db.execute(sql.SQL('''SELECT ask FROM {}''').format(sql.Identifier(chat_id)))
