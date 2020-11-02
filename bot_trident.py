@@ -140,18 +140,18 @@ def show_triggers(message):
 
 @RoyalTrident_bot.message_handler (commands = ['add_trigger'])
 def add_trigger(message):
-    try:
       chat_id = str(message.chat.id)
       create_table_chat_id(chat_id)
       reply = message.reply_to_message
       ask_result = re.search("\s.*",message.text)
+      print(ask_result)
       ask = ask_result.group(0)
+      print(ask)
       ask_result = re.search(".*",ask)
+      print(ask_result)
       ask = ask_result.group(0)
+      print(ask)
       ask = ask[1:]
-    except:
-      RoyalTrident_bot.send_message(450927903, chat_id + "\n" + reply + "\n" + ask_result + "\n" + ask)
-
       if(reply is None or (len(message.text) < 14)):
         return 
       db.execute(sql.SQL('''SELECT ask FROM {}''').format(sql.Identifier(chat_id)))
@@ -360,7 +360,11 @@ def lower_check(table_list,ask):
 
 def main():
   create_mobs_tables()
-  RoyalTrident_bot.polling(none_stop=True)
+  while(True):
+    try :
+        RoyalTrident_bot.polling(none_stop=True)
+    except:
+        time.sleep(5)
 
 
 if __name__=='__main__':

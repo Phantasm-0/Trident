@@ -1,9 +1,9 @@
-import time,datetime,psycopg2,urllib.parse,telebot,re,random
+import time,psycopg2,urllib.parse,telebot,re
 from telebot import types
 from psycopg2 import sql
 
-RoyalTrident_bot = telebot.AsyncTeleBot('1222435814:AAFPEFv8ad_2xBIuYUMc5aIDxqKGhAKRijo')
-conn = psycopg2.connect(database='postgres', user='postgres', password='123Anapa2017', host='localhost',port = 5432)
+RoyalTrident_bot = telebot.AsyncTeleBot('1125612607:AAG4o5Myw3TB8ZnYfBbnRMZ0AdW_YG1EVMQ')
+conn = psycopg2.connect(database='postgres', user='Phantasm', password='123Anapa2017', host='localhost',port = 5432)
 db = conn.cursor()
 def update_helpers(call):
   RoyalTrident_bot.answer_callback_query(call.id)
@@ -12,7 +12,7 @@ def update_helpers(call):
   number_result = number_result[0] + 1
   db.execute('SELECT helpers FROM MOBS  WHERE link = %s',(call.data,))
   result = db.fetchone()
-  result = str(result[0])  + "<b>" + str(number_result) + "." +"</b>" + call.from_user.first_name + "("+ "@" + call.from_user.username +  ")"+ "\n" 
+  result = str(result[0])  + "<b>" + str(number_result) + "." +"</b>" + Nonestr(call.from_user.first_name) + "("+ "@" + Nonestr(call.from_user.username )+  ")"+ "\n"
   db.execute('UPDATE MOBS SET helpers = %s  WHERE link = %s',(result,call.data))
   conn.commit()
   db.execute('UPDATE MOBS SET helpers_number = %s  WHERE link = %s',(number_result,call.data))
@@ -35,7 +35,10 @@ def find_mobs_message(message):
   conn.commit()
   db.execute(sql.SQL('''INSERT INTO MOBS_HELPERS (link,helpers_id) VALUES (%s,%s)''') ,(link,message.from_user.id))
   conn.commit()
-  update_mobs_message(link,timer,message.chat.id,message_for_update.message_id,message.forward_date,mobs_text_parsed)
+  try:
+    update_mobs_message(link,timer,message.chat.id,message_for_update.message_id,message.forward_date,mobs_text_parsed)
+  except:
+    RoyalTrident_bot.send_message(450927903,str(message_for_update))
 
 def delete_table():
     db.execute('DROP TABLE MOBS')
@@ -53,7 +56,7 @@ def update_mobs_message(link,timer,message_chat_id,message_id,message_date,mobs_
   answer = mobs_text +"\n\n" + "⏰:РИП\n\n" + "<b>👑 Хокаге по вызову:\n</b>" + helpers(link)
   while(type(RoyalTrident_bot.edit_message_text(answer,message_chat_id,message_id,parse_mode = 'HTML')) == "bool"):
     time.sleep(5)
-    RoyalTrident_bot.edit_message_text(answer,message_chat_id,message_id,parse_mode = 'HTML') 
+    RoyalTrident_bot.edit_message_text(answer,message_chat_id,message_id,parse_mode = 'HTML')
   #delete_mob(link)
   return
 
@@ -91,3 +94,8 @@ def create_mobs_tables():
   conn.commit()
   db.execute(' CREATE TABLE IF NOT EXISTS MOBS_HELPERS (link text,helpers_id text)')
   conn.commit()
+
+def Nonestr(x):
+    if x is None:
+      return ""
+    return x
