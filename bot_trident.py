@@ -6,7 +6,7 @@ from stock import stock
 
 
 RoyalTrident_bot = telebot.AsyncTeleBot('1125612607:AAG4o5Myw3TB8ZnYfBbnRMZ0AdW_YG1EVMQ')
-conn = psycopg2.connect(database='postgres', user="Phantasm", password='123Anapa2017', host='localhost', port = 5432)
+conn = psycopg2.connect(database='postgres', user="postgres", password='123Anapa2017', host='localhost', port = 5432)
 db = conn.cursor()
 
 @RoyalTrident_bot.callback_query_handler(func=lambda call: True)

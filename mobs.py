@@ -3,7 +3,7 @@ from telebot import types
 from psycopg2 import sql
 
 RoyalTrident_bot = telebot.AsyncTeleBot('1125612607:AAG4o5Myw3TB8ZnYfBbnRMZ0AdW_YG1EVMQ')
-conn = psycopg2.connect(database='postgres', user='Phantasm', password='123Anapa2017', host='localhost',port = 5432)
+conn = psycopg2.connect(database='postgres', user='postgres', password='123Anapa2017', host='localhost',port = 5432)
 db = conn.cursor()
 def update_helpers(call):
   RoyalTrident_bot.answer_callback_query(call.id)
