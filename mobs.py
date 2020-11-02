@@ -2,7 +2,7 @@ import time,psycopg2,urllib.parse,telebot,re
 from telebot import types
 from psycopg2 import sql
 
-RoyalTrident_bot = telebot.AsyncTeleBot('1125612607:AAG4o5Myw3TB8ZnYfBbnRMZ0AdW_YG1EVMQ')
+RoyalTrident_bot = telebot.AsyncTeleBot('1222435814:AAFPEFv8ad_2xBIuYUMc5aIDxqKGhAKRijo')
 conn = psycopg2.connect(database='postgres', user='postgres', password='123Anapa2017', host='localhost',port = 5432)
 db = conn.cursor()
 def update_helpers(call):
