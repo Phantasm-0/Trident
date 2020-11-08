@@ -1,6 +1,6 @@
 import urllib.parse,telebot,re
 from telebot import types
-
+from global_consts import TOKEN
 
 RoyalTrident_bot = telebot.AsyncTeleBot('1222435814:AAFPEFv8ad_2xBIuYUMc5aIDxqKGhAKRijo')
 resource_pack = {'Thread': '01',
@@ -532,6 +532,7 @@ def give_any(message):
   answer_html = '<a href="https://t.me/share/url?url=' + answer_url +  '">'+ answer + '</a>'
   RoyalTrident_bot.send_message(message.chat.id,answer_html,parse_mode = 'HTML')
 
+
 def give_additional_any(result,message):
     g_withdraw ="/g_withdraw"
     answer = g_withdraw
@@ -541,7 +542,6 @@ def give_additional_any(result,message):
     answer_url = urllib.parse.quote(answer,)
     answer_html = '<a href="https://t.me/share/url?url=' + answer_url +  '">'+ answer + '</a>'
     RoyalTrident_bot.send_message(message.chat.id,answer_html,parse_mode = 'HTML')
-
 
 
 def give_additional_all(regex,list_for_search,g_what,answer_name):
@@ -588,3 +588,6 @@ def give_all_(regex,list_for_search,g_what,answer_name):
                   answer_url = urllib.parse.quote(answer_url)
                   answer_for_send += answer_url
     return (answer+html_start_string + g_withdraw + answer_for_send + '">'+ answer_name  + '</a>'+ '\n')
+
+
+#def giver(regex,list_for_search,give_or_withdraw):

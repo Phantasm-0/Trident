@@ -1,13 +1,18 @@
 #!/usr/bin/env python3
 import telebot, psycopg2, time, htmlentities, re, urllib.parse
 from psycopg2 import sql
-from mobs import create_mobs_tables, update_helpers, find_mobs_message
-from stock import stock
+from new_mobs import  update_helpers, find_mobs_message
+from stock import stock,give_any
+from global_consts import TOKEN, DATABASE, USER, PASSWORD,HOST, PORT
 
 
 RoyalTrident_bot = telebot.AsyncTeleBot('1222435814:AAFPEFv8ad_2xBIuYUMc5aIDxqKGhAKRijo')
-conn = psycopg2.connect(database='postgres', user="postgres", password='123Anapa2017', host='localhost', port = 5432)
+conn = psycopg2.connect(database = 'postgres', user = 'Phantasm', password = '123Anapa2017', host= 'localhost', port = 5432)
 db = conn.cursor()
+
+
+
+
 
 @RoyalTrident_bot.callback_query_handler(func=lambda call: True)
 def decorated_update_helpers(call):
@@ -17,6 +22,7 @@ def decorated_update_helpers(call):
 @RoyalTrident_bot.message_handler(func=lambda message: message.forward_from is not None and message.forward_from.username == "ChatWarsBot",regexp = "Ты заметил враждебных существ. " )
 def decorated_find_mobs_message(message):
   find_mobs_message(message)
+
 
 
 
@@ -35,39 +41,8 @@ def decorated_stock(message):
 
 
 @RoyalTrident_bot.message_handler(regexp="^([дД]ай|[Ll]fq)\s")
-def give_any(message):
-  text = message.text
-  g_withdraw ="/g_withdraw"
-  answer = g_withdraw
-  additional_any = []
-  amount = "1"
-  if(re.search("\d{1,100}",text)):
-     result = re.search("\d{1,100}",text)
-     amount = result.group(0)
-  if(re.search("\s[Фф][Дд]($|\s)",text)):
-            answer += " p04 " + amount +  " p05 " +  amount + " p06 " +  amount
-  if(re.search("\s[Фф][Рр]($|\s)",text)):
-            answer += " p01 " + amount +  " p02 " +  amount + " p03 " +  amount
-  if(re.search("\s[Мм][Оо][Рр][Фф]([Ыы]|$|\s)",text)) :
-            answer += " p19 " + amount +  " p20 " +  amount + " p21 " +  amount
-
-
-  if(answer == g_withdraw):
-    if(re.search("\s\w{1,100}",text)):
-      result = re.findall("\s\w{1,100}",text)
-      while(len(result)>18):
-         while (len(additional_any) != 18): 
-               additional_any.insert(0, result.pop(0))
-         give_additional_any(additional_any,message)
-         additional_any.clear()
-      for element in result:
-            if(element != ("дай" or "Дай" )):
-              answer += element 
-  if(answer == g_withdraw):
-    return          
-  answer_url = urllib.parse.quote(answer,)
-  answer_html = '<a href="https://t.me/share/url?url=' + answer_url +  '">'+ answer + '</a>'
-  RoyalTrident_bot.send_message(message.chat.id,answer_html,parse_mode = 'HTML')
+def decorated_give_any(message):
+    give_any(message)
 
 
 
@@ -81,7 +56,6 @@ def info(message):
     first_name = reply.from_user.first_name
     username = reply.from_user.username
     last_name = reply.from_user.last_name
-    message_id = reply.message_id
     user_id = str(reply.from_user.id)
     date_str = '<b>' +'Date: '+ '</b>' + '<code>' + str(time.strftime('%a, %d %b %Y %H:%M:%S +0000', time.localtime(reply.date))) + '</code>'
     if(reply.sticker is not None):
@@ -120,8 +94,7 @@ def info(message):
 
 @RoyalTrident_bot.message_handler(commands = ['chat_id'])
 def chat_id(message):
-    str = message.chat.id
-    RoyalTrident_bot.reply_to(message, str)
+    RoyalTrident_bot.reply_to(message, message.chat.id)
 
 
 @RoyalTrident_bot.message_handler(commands = ['show_triggers'])
@@ -359,7 +332,7 @@ def lower_check(table_list,ask):
 
 
 def main():
-  create_mobs_tables()
+
   while(True):
     try :
         RoyalTrident_bot.polling(none_stop=True)
