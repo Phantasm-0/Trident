@@ -7,7 +7,7 @@ from global_consts import TOKEN, DATABASE, USER, PASSWORD,HOST, PORT
 
 
 RoyalTrident_bot = telebot.AsyncTeleBot('1222435814:AAFPEFv8ad_2xBIuYUMc5aIDxqKGhAKRijo')
-conn = psycopg2.connect(database = 'postgres', user = 'Phantasm', password = '123Anapa2017', host= 'localhost', port = 5432)
+conn = psycopg2.connect(database = 'postgres', user = 'postgres', password = '123Anapa2017', host= 'localhost', port = 5432)
 db = conn.cursor()
 
 
