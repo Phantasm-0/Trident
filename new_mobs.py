@@ -34,14 +34,13 @@ class Mob:
                 else:
                     time.sleep(5)
         answer = self.mobs_text + "⏰:РИП\n\n" + "<b>👑 Хокаге по вызову:\n</b>" + self.helpers()
-        any = RoyalTrident_bot.edit_message_text(answer, self.message.chat.id, self.message_for_update.message_id, parse_mode='HTML')
-        print(any)
+        RoyalTrident_bot.edit_message_text(answer, self.message.chat.id, self.message_for_update.message_id, parse_mode='HTML')
 
     def helpers(self):
         answer = ''
         n = 1
         for helper in self.helpers_list:
-            answer += "<b>" + str(n) + "."  "</b>"  + nonestr(helper.first_name) + nonestr(helper.last_name) + "(" + '@'+nonestr(helper.username) + ")" + '\n'
+            answer += "<b>" + str(n) + "."  "</b>"  + nonestr(helper.first_name) +' ' +nonestr(helper.last_name) +' ' + "(" + '@'+nonestr(helper.username) + ")" + '\n'
             n+=1
         return answer
 
@@ -102,6 +101,7 @@ def find_mobs_message(message):
   mob_list.append(mob)
   mob.updating()
   mob_list.remove(mob)
+  print(len(mob_list))
 
 
 
