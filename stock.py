@@ -1,8 +1,6 @@
-import urllib.parse,telebot,re
-from telebot import types
-from global_consts import TOKEN
+import urllib.parse,re
+from global_consts import RoyalTrident_bot
 
-RoyalTrident_bot = telebot.AsyncTeleBot('1222435814:AAFPEFv8ad_2xBIuYUMc5aIDxqKGhAKRijo')
 resource_pack = {'Thread': '01',
 'Stick': '02',
 'Pelt': '03',

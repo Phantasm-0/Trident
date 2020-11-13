@@ -1,3 +1,6 @@
+import telebot
+
+
 TEST_MODE = True
 TOKEN = str()
 DATABASE = 'postgres'
@@ -11,12 +14,8 @@ WORK_USER = 'postgres'
 TEST_USER = 'Phantasm'
 
 
-def work_mode():
-    if (TEST_MODE is True):
-        TOKEN = TEST_TOKEN
-        USER = TEST_USER
-    else:
-        TOKEN = WORK_TOKEN
-        USER = WORK_USER
+
+RoyalTrident_bot = telebot.AsyncTeleBot('1222435814:AAFPEFv8ad_2xBIuYUMc5aIDxqKGhAKRijo')
+
 
 

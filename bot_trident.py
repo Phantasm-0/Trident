@@ -1,17 +1,19 @@
 #!/usr/bin/env python3
-import telebot, psycopg2, time, htmlentities, re, urllib.parse
+import  psycopg2, time, htmlentities, re, urllib.parse
 from psycopg2 import sql
 from new_mobs import  update_helpers, find_mobs_message
 from stock import stock,give_any
-from global_consts import TOKEN, DATABASE, USER, PASSWORD,HOST, PORT
+from time_trigger import righttime
+from global_consts import RoyalTrident_bot
 
 
-RoyalTrident_bot = telebot.AsyncTeleBot('1222435814:AAFPEFv8ad_2xBIuYUMc5aIDxqKGhAKRijo')
 conn = psycopg2.connect(database = 'postgres', user = 'postgres', password = '123Anapa2017', host= 'localhost', port = 5432)
 db = conn.cursor()
 
 
-
+@RoyalTrident_bot.message_handler(func=lambda message: message.forward_from is not None and message.forward_from.username == "ChatWarsBot",regexp = "🍁Royal Trident")
+def decorated_wake_up_guild(message):
+    righttime(message)
 
 
 @RoyalTrident_bot.callback_query_handler(func=lambda call: True)
