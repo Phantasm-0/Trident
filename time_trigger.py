@@ -29,16 +29,15 @@ guild_dict = {
 'cat Leopold': 'GoTo87',
 }
 guild_keys = guild_dict.keys()
+tz = datetime.tzinfo('Europe/Moscow')
 
+f_evening = datetime.datetime(1,1,1,16,45,0,0,tz)
+f_morning = datetime.datetime(1,1,1,8,45,0,0,tz)
+f_night = datetime.datetime(1,1,1,00,45,0,0,tz)
 
-
-f_evening = datetime.datetime(1,1,1,16,45,0,0,'Europe/Moscow')
-f_morning = datetime.datetime(1,1,1,8,45,0,0,'Europe/Moscow')
-f_night = datetime.datetime(1,1,1,00,45,0,0,'Europe/Moscow')
-
-s_evening = datetime.datetime(1,1,1,16,59,0,0,'Europe/Moscow')
-s_morning = datetime.datetime(1,1,1,8,59,0,0,'Europe/Moscow')
-s_night = datetime.datetime(1,1,1,0,59,0,0,'Europe/Moscow')
+s_evening = datetime.datetime(1,1,1,16,59,0,0,tz)
+s_morning = datetime.datetime(1,1,1,8,59,0,0,tz)
+s_night = datetime.datetime(1,1,1,0,59,0,0,tz)
 
 const_times_f =[f_morning,f_evening,f_night]
 const_times_s = [s_morning,s_evening,s_night]
