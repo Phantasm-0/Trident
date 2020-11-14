@@ -1,4 +1,4 @@
-import datetime,pytz,re
+import datetime,re
 from global_consts import RoyalTrident_bot
 
 
@@ -31,14 +31,14 @@ guild_dict = {
 guild_keys = guild_dict.keys()
 
 
-timzone = pytz.timezone('Europe/Moscow')
-f_evening = datetime.datetime(1,1,1,16,45,0,0,timzone)
-f_morning = datetime.datetime(1,1,1,8,45,0,0,timzone)
-f_night = datetime.datetime(1,1,1,00,45,0,0,timzone)
 
-s_evening = datetime.datetime(1,1,1,16,59,0,0,timzone)
-s_morning = datetime.datetime(1,1,1,8,59,0,0,timzone)
-s_night = datetime.datetime(1,1,1,0,59,0,0,timzone)
+f_evening = datetime.datetime(1,1,1,16,45,0,0,'Europe/Moscow')
+f_morning = datetime.datetime(1,1,1,8,45,0,0,'Europe/Moscow')
+f_night = datetime.datetime(1,1,1,00,45,0,0,'Europe/Moscow')
+
+s_evening = datetime.datetime(1,1,1,16,59,0,0,'Europe/Moscow')
+s_morning = datetime.datetime(1,1,1,8,59,0,0,'Europe/Moscow')
+s_night = datetime.datetime(1,1,1,0,59,0,0,'Europe/Moscow')
 
 const_times_f =[f_morning,f_evening,f_night]
 const_times_s = [s_morning,s_evening,s_night]

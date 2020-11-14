@@ -335,14 +335,10 @@ def lower_check(table_list,ask):
 
 def main():
 
-  while(True):
-    try :
-        RoyalTrident_bot.polling(none_stop=True)
-    except:
-        time.sleep(5)
+     RoyalTrident_bot.polling(none_stop=True)
 
 
-if __name__=='__main__':
+if __name__ == '__main__':
   main()
 
 #def
