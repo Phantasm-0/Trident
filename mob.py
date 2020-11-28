@@ -1,5 +1,5 @@
     
-import time,re
+import time,re,urllib
 from telebot import types
 from global_consts import RoyalTrident_bot
 
@@ -84,6 +84,20 @@ class Mob:
           return new_answer
 
 
+    def ping_tops(self):
+        RoyalTrident_bot.send_message(self.message.chat.id,'''@kappainho @bekmurat @Farfelkygelain @PlotArmor @notaloneindec''')
+        RoyalTrident_bot.send_message(self.message.chat.id,'@Scuns87 @Soarelia')
+
+    def give_pots(self):
+
+        answer = "/g_withdraw"+" p04 " + str(1) + " p05 " + str(1) + " p06 " + str(1)
+        answer_url = urllib.parse.quote(answer, )
+        answer_html = '<a href="https://t.me/share/url?url=' + answer_url + '">' + "Писы" + '</a>'
+        RoyalTrident_bot.send_message(self.message.chat.id,answer_html,parse_mode='HTML')
+        answer = "/g_withdraw"+" p01 " + str(1) + " p02 " + str(1) + " p03 " + str(1)
+        answer_url = urllib.parse.quote(answer,)
+        answer_html = '<a href="https://t.me/share/url?url=' + answer_url + '">' + "Раги" + '</a>'
+        RoyalTrident_bot.send_message(self.message.chat.id,answer_html,parse_mode='HTML')
 
 def nonestr(x):
     if x is None:
