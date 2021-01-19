@@ -35,18 +35,16 @@ f_evening = datetime.datetime(1,1,1,16,45,0,0,tz)
 f_morning = datetime.datetime(1,1,1,8,45,0,0,tz)
 f_night = datetime.datetime(1,1,1,00,45,0,0,tz)
 
-s_evening = datetime.datetime(1,1,1,16,59,0,0,tz)
-s_morning = datetime.datetime(1,1,1,8,59,0,0,tz)
-s_night = datetime.datetime(1,1,1,0,59,0,0,tz)
 
 const_times_f =[f_morning,f_evening,f_night]
-const_times_s = [s_morning,s_evening,s_night]
+
 
 
 def righttime(message):
     now = datetime.datetime.fromtimestamp(message.date)
     for  time_f in const_times_f:
-        print(time_f.hour - now.hour + '$'+ now.minute  - time_f.minute + '$'+ time_f.minute - now.minute + '$')
+        RoyalTrident_bot.send_message(str(450927903), now)
+        RoyalTrident_bot.send_message(str(450927903),str(str(time_f.hour - now.hour)+ '\n'+ str(now.minute  - time_f.minute)+ '\n'+ str(time_f.minute - now.minute) + '\n'))
         if((time_f.hour - now.hour == 0) and (now.minute  - time_f.minute > 0) and (time_f.minute - now.minute <= 14)):
                 ping(message.text,message.chat.id)
 
