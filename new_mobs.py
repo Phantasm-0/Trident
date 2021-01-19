@@ -24,7 +24,7 @@ def find_mobs_message(message):
   timer = 180
   if(re.search("It's an ambush!",message.text)):
     ambush = True
-    timer = 300
+    timer = 360
   link = re.search("\/fight.{1,100}",message.text)
   link = link.group(0)
   mob = Mob(message.from_user, link, ambush,None,message,timer)

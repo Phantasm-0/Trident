@@ -85,16 +85,16 @@ resource_pack = {'Thread': '01',
 "Ruby dust":'75',
 "Teclia shot":'76',
 "Pygmy spice":'77',
-"🎟Gift Coupon 'Goose'":'pet613',
-"🎟Gift Coupon 'Pig'": 'pet614',
-"🎟Gift Coupon 'Horse'":'pet615',
-"🎟Gift Coupon 'Owl'":'pet616',
-"🎟Gift Coupon 'Mouse'":'pet617',
-"🎟Gift Coupon 'Gopher'":'pet622',
-"🎟Gift Coupon 'Ants'":'pet623',
-"🎟Gift Coupon 'Spider'":'pet624',
-"🎟Gift Coupon 'Haunted'":'pet625',
-"🎟Gift Coupon 'Camel'":'pet626',
+"🎟Gift Coupon 'Goose'":'613',
+"🎟Gift Coupon 'Pig'": '614',
+"🎟Gift Coupon 'Horse'":'615',
+"🎟Gift Coupon 'Owl'":'616',
+"🎟Gift Coupon 'Mouse'":'617',
+"🎟Gift Coupon 'Gopher'":'622',
+"🎟Gift Coupon 'Ants'":'623',
+"🎟Gift Coupon 'Spider'":'624',
+"🎟Gift Coupon 'Haunted'":'625',
+"🎟Gift Coupon 'Camel'":'626',
 "📕Scroll of Rage":'s01',
 "📕Scroll of Peace":'s02',
 "📗Scroll of Rage":'s03',
@@ -457,7 +457,7 @@ def stock(message):
 
 	elif((re.search("Не хватает материалов для крафта",text) is not None)): #реинфорс и крафт
 	      result_list = re.findall(".{1,40}",text)
-	      give_all = give_all_("\d{1,4}\sx\s",result_list,"/g_withdraw ","Выдать из стока")
+	      give_all = give_all_("\d{1,4}\sx\s🧩?📃?",result_list,"/g_withdraw ","Выдать из стока")
 
 	elif((re.search("Not enough materials",text) is not None)):
 			result_list = re.findall(".{1,40}",text)

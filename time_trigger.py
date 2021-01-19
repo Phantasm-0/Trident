@@ -46,6 +46,7 @@ const_times_s = [s_morning,s_evening,s_night]
 def righttime(message):
     now = datetime.datetime.fromtimestamp(message.date)
     for  time_f in const_times_f:
+        print(time_f.hour - now.hour + '$'+ now.minute  - time_f.minute + '$'+ time_f.minute - now.minute + '$')
         if((time_f.hour - now.hour == 0) and (now.minute  - time_f.minute > 0) and (time_f.minute - now.minute <= 14)):
                 ping(message.text,message.chat.id)
 
