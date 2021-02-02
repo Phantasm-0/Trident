@@ -30,6 +30,7 @@ guild_dict = {
 }
 guild_keys = guild_dict.keys()
 tz = datetime.tzinfo('Europe/Moscow')
+tz = datetime.timezone(datetime.timedelta(hours=3))
 
 f_evening = datetime.datetime(1,1,1,16,45,0,0,tz)
 f_morning = datetime.datetime(1,1,1,8,45,0,0,tz)
