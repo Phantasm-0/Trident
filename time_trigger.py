@@ -63,15 +63,11 @@ def create_list_for_ping(text):
 def ping(list_for_ping ,chat_id):
     answer = str()
     counter = 0
-    while (len(list_for_ping) > 0):
-                answer += '@'+str(list_for_ping[0]) + ' '
-                counter +=1
-                if(counter == 5):
-                    RoyalTrident_bot.send_message(chat_id,answer)
-                    counter = 0
-                    answer =''
-                list_for_ping.pop(0)
 
-
-
-
+    for member in list_for_ping:
+        answer += '@' +member + ' '
+        counter+=1
+        if(counter == 5):
+            RoyalTrident_bot.send_message(chat_id, answer)
+            answer =''
+    RoyalTrident_bot.send_message(chat_id, answer)
