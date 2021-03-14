@@ -11,7 +11,7 @@ conn = psycopg2.connect(database = 'postgres', user = 'postgres', password = '12
 db = conn.cursor()
 
 
-@RoyalTrident_bot.message_handler(func=lambda message: message.forward_from is not None and message.forward_from.username == "ChatWarsBot",regexp = "🍁Royal Trident")
+@RoyalTrident_bot.message_handler(func=lambda message: message.forward_from is not None and message.forward_from.username == "ChatWarsBot",regexp = "🖤Royal Trident")
 def decorated_wake_up_guild(message):
     righttime(message)
 
