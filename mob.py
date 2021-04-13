@@ -85,7 +85,7 @@ class Mob:
 
 
     def ping_tops(self):
-        RoyalTrident_bot.send_message(self.message.chat.id,'''@kappainho @bekmurat @Farfelkygelain @PlotArmor @notaloneindec''')
+        RoyalTrident_bot.send_message(self.message.chat.id,'''@kappainho @bekmurat @Farfelkygelain @PlotArmor @ProoFFie''')
         RoyalTrident_bot.send_message(self.message.chat.id,'@Scuns87 @Soarelia')
 
     def give_pots(self):

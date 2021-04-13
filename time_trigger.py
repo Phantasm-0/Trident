@@ -12,7 +12,7 @@ guild_dict = {
 'Флегматик': ['Soarelia','Renbrane'],
 'EPetuhov': ['Soarelia','Renbrane'],
 'undfndnm': ['PlotArmor'],
-'Виски': ['Soarelia'],
+'Soare': ['Soarelia'],
 'BolshoyMolodecKT': ['Ln156'],
 'Тёпленькая вода': ['Renbrane'],
 'Shinen': ['HatredPerson'],
@@ -39,9 +39,7 @@ f_night = datetime.datetime(1,1,1,00,45,0,0,tz)
 
 
 
-
 const_times_f =[f_morning,f_evening,f_night]
-
 
 
 
@@ -58,6 +56,8 @@ def create_list_for_ping(text):
     for user in guild_keys:
         if((re.search("🛌]\s"+user,text)) or (re.search("⚒]\s"+user,text)) or (re.search("⚗️]\s"+user,text))):
             list_for_ping.extend(guild_dict[user])
+    if((re.search("🛌]\s"+'Bekish',text)) or (re.search("⚒]\s"+'Bekish',text)) or (re.search("⚗️]\s"+'Bekish',text)) or (re.search("🌲]\s"+'Bekish',text)) ):
+            list_for_ping.extend(  ['bekmurat'])
     return list(set(list_for_ping))
 
 def ping(list_for_ping ,chat_id):
