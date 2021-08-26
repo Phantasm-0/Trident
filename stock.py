@@ -1,5 +1,5 @@
 import urllib.parse, re
-from global_consts import RoyalTrident_bot
+from Global import RoyalTrident_bot
 
 resource_pack = {'Thread': '01',
                  'Stick': '02',

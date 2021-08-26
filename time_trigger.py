@@ -1,7 +1,6 @@
 import datetime,re
-from global_consts import RoyalTrident_bot
-
-
+from MobWorker import  UserLevelUpdate
+from Utility import PingByFive
 guild_dict = {
 'Bekish': ['bekmurat'],
 'Scuns87':['Scuns87'],
@@ -43,13 +42,13 @@ const_times_f =[f_morning,f_evening,f_night]
 
 
 
-def righttime(message):
+def PingOnBattleAndUpdateUsers(message):
+    UserLevelUpdate(message)
     now = datetime.datetime.fromtimestamp(message.date,tz)
     for  time_f in const_times_f:
         if((time_f.hour - now.hour  == 0) and (now.minute  - time_f.minute > 0) and (time_f.minute - now.minute <= 14)):
                 list_for_ping = create_list_for_ping(message.text)
-                ping(list_for_ping,message.chat.id)
-
+                PingByFive(message.chat.id, list_for_ping)
 
 def create_list_for_ping(text):
     list_for_ping = list()
@@ -59,15 +58,3 @@ def create_list_for_ping(text):
     if((re.search("🛌]\s"+'Bekish',text)) or (re.search("⚒]\s"+'Bekish',text)) or (re.search("⚗️]\s"+'Bekish',text)) or (re.search("🌲]\s"+'Bekish',text)) ):
             list_for_ping.extend(  ['bekmurat'])
     return list(set(list_for_ping))
-
-def ping(list_for_ping ,chat_id):
-    answer = str()
-    counter = 0
-
-    for member in list_for_ping:
-        answer += '@' +member + ' '
-        counter+=1
-        if(counter == 5):
-            RoyalTrident_bot.send_message(chat_id, answer)
-            answer =''
-    RoyalTrident_bot.send_message(chat_id, answer)

@@ -1,52 +1,38 @@
 #!/usr/bin/env python3
 import  psycopg2, time, htmlentities, re, urllib.parse
 from psycopg2 import sql
-from new_mobs import  update_helpers, find_mobs_message
+from MobWorker import  update_helpers, find_mobs_message
 from stock import stock,give_any
-from time_trigger import righttime
-from global_consts import RoyalTrident_bot
+from time_trigger import PingOnBattleAndUpdateUsers
+from Global import RoyalTrident_bot
 
-
-conn = psycopg2.connect(database = 'postgres', user = 'postgres', password = '123Anapa2017', host= 'localhost', port = 5432)
+conn = psycopg2.connect(database = 'postgres', user = 'Phantasm', password = '123Anapa2017', host= 'localhost', port = 5432)
 db = conn.cursor()
-
 
 @RoyalTrident_bot.message_handler(func=lambda message: message.forward_from is not None and message.forward_from.username == "ChatWarsBot",regexp = "🖤Royal Trident")
 def decorated_wake_up_guild(message):
-    righttime(message)
-
+    PingOnBattleAndUpdateUsers(message)
 
 @RoyalTrident_bot.callback_query_handler(func=lambda call: True)
 def decorated_update_helpers(call):
   update_helpers(call)
 
-
 @RoyalTrident_bot.message_handler(func=lambda message: message.forward_from is not None and message.forward_from.username == "ChatWarsBot",regexp = "Ты заметил враждебных существ. " )
 def decorated_find_mobs_message(message):
   find_mobs_message(message)
-
-
-
 
 @RoyalTrident_bot.message_handler(regexp= "[Лл]авки")
 def timed_resolve(message):
     answer =''' Вишня — <a href="http://t.me/share/url?url=/ws_chery">/ws_chery</a>''' + '\n'+ '''Пруфе — <a href="http://t.me/share/url?url=/ws_happy">/ws_happy</a>''' + '\n'+'''Мейв — <a href="http://t.me/share/url?url=/ws_FnwIe">/ws_FnwIe</a>'''  + '\n'+ '''Мрак — <a href="http://t.me/share/url?url=/ws_lT0Rm">/ws_lT0Rm</a>''' + '\n'+'''Фарфель — <a href="http://t.me/share/url?url=/ws_XioEX">/ws_XioEX</a>'''
     RoyalTrident_bot.send_message(message.chat.id,answer,parse_mode = 'HTML')
 
-
 @RoyalTrident_bot.message_handler(func = lambda message: message.forward_from is not None and message.forward_from.username == "ChatWarsBot")
 def decorated_stock(message):
     stock(message)
 
-
-    
-
-
 @RoyalTrident_bot.message_handler(regexp="^([дД]ай|[Ll]fq)\s")
 def decorated_give_any(message):
     give_any(message)
-
-
 
 @RoyalTrident_bot.message_handler(commands = ['info'])
 def info(message):
@@ -88,16 +74,16 @@ def info(message):
       reply_text = htmlentities.encode(reply.text)
       message_str ='<b>'+ 'Message: '+ '</b>'+ reply_text + '\n'
 
+    elif(reply.voice is not None):
+        message_str = '<b>' + 'Voice: ' + '</b>' + 'voice' + '\n'
+
     user_str = '<b>' + 'User: '+ '</b>' + Nonestr(first_name) + Nonestr(last_name) + '(' + Nonestr(username) + ('/' if len(Nonestr(username)) > 0 else "") + '<code>' + user_id  + '</code>'  + ')' + '\n'
     answer = message_str + user_str + date_str
     RoyalTrident_bot.send_message(chat_id, answer,parse_mode = 'HTML')
 
-
-
 @RoyalTrident_bot.message_handler(commands = ['chat_id'])
 def chat_id(message):
     RoyalTrident_bot.reply_to(message, message.chat.id)
-
 
 @RoyalTrident_bot.message_handler(commands = ['show_triggers'])
 def show_triggers(message):
@@ -111,7 +97,6 @@ def show_triggers(message):
   for i in answer :
     stred += i[0]+ '\n'    
   RoyalTrident_bot.reply_to(message, stred)
-
 
 @RoyalTrident_bot.message_handler (commands = ['add_trigger'])
 def add_trigger(message):
@@ -175,7 +160,6 @@ def add_trigger(message):
           db.execute(sql.SQL('''INSERT INTO {} (ask,answer,type) VALUES ( %s, %s,%s)''').format(sql.Identifier(chat_id)) ,(ask ,reply.text, 'text'))
           conn.commit()
           RoyalTrident_bot.reply_to(message, 'Текст добавлен')
-              
 
 @RoyalTrident_bot.message_handler(commands = ['del_trigger'])
 def del_trigger(message):
@@ -191,11 +175,7 @@ def del_trigger(message):
       conn.commit()
       RoyalTrident_bot.reply_to(message, 'Команда удалена')
 
-
-
-    
-
-@RoyalTrident_bot.message_handler()
+@RoyalTrident_bot.message_handler(func = lambda message:True)
 def any_trigger(message):
      chat_id = str(message.chat.id)
      create_table_chat_id(chat_id)
@@ -289,8 +269,6 @@ def updater(message,reply,chat_id,ask):
         conn.commit()
         RoyalTrident_bot.reply_to(message, 'Текст перезаписан')
 
-
-
 def create_table_chat_id(chat_id):
  db.execute(sql.SQL(' CREATE TABLE IF NOT EXISTS {} (id serial NOT NULL, ask text, answer text, type text)').format(sql.Identifier(chat_id)))
  conn.commit()
@@ -299,8 +277,6 @@ def Nonestr(x):
     if x is None:
         return ""
     return x
-
-
 
 def give_additional_any(result,message):
     g_withdraw ="/g_withdraw"
@@ -312,7 +288,6 @@ def give_additional_any(result,message):
     answer_html = '<a href="https://t.me/share/url?url=' + answer_url +  '">'+ answer + '</a>'
     RoyalTrident_bot.send_message(message.chat.id,answer_html,parse_mode = 'HTML')
 
-
 def convert(tuple):
     new_list = list()
     for i in tuple:
@@ -320,36 +295,15 @@ def convert(tuple):
         new_list.append(b)
     return new_list
 
-
-
-
-
 def lower_check(table_list,ask):
   for i in table_list:
     if(i.lower() == ask.lower()):
       return i
   return False
 
-
-
-
 def main():
-
-     RoyalTrident_bot.polling(none_stop=True)
-
+    RoyalTrident_bot.polling(none_stop=True)
 
 if __name__ == '__main__':
   main()
-
-#def
-#if (items_code[i] in anylist):
-
-#kt_list = ['Farfelkygelain','ungewissheit','kappainho','Scuns87','notaloneindec','bekmurat','larina457','EPetuhov','Vasde','Ksandrax','GoTo87','VishenkaNyam','phenjan','PlotArmor','tahena','Renbrane','coronashizus','Soarelia','ProoFFie','gaelicwar','HatredPerson','ProydemteMolodoy','Ln156','ElderSign','','',]
-
-
-#def kt_check(message):
-	#if(message.from_user.username in kt_list):
-		#return True
-	#else:
-		#return False
 

@@ -1,0 +1,8 @@
+from datetime import time
+from telebot import types
+from sqlalchemy import create_engine
+
+engine = create_engine("postgresql://Phantasm:123Anapa2017@localhost/postgres")
+engine.execute("CREATE TABLE IF NOT EXISTS TEST(id text)")
+engine.execute("DROP TABLE  TEST")
+time.sleep(1)
