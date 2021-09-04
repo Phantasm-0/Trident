@@ -1,51 +1,58 @@
 from Utility import PingByFive
 import time,re,urllib
 from telebot import types
-from Global import RoyalTrident_bot,Guild
+from Global import Bot,Guild
+from Utility import EmptyStringCheck, GivePots
 
 
 
 
 
 class Mob:
-    def __init__(self,owner,link,ambush,message_for_update,message,timer):
+    def __init__(self,owner,message_for_update,message):
         self.owner = owner
         self.message = message
-        self.link = link
-        self.is_ambush = ambush
+        self.is_ambush = bool()
         self.mobs_text = self.MobsText()
         self.message_for_update = message_for_update
-        self.timer = timer
+        self.timer = 180
+        self.link = str()
         self.helpers_list = list()
         self.is_champion = False
         self._force_update = False
         self._MobsLevel = int()
         self.RANGE_FOR_BATTLE_TAKE = 10
-
-    def updating(self):
+        self.IsAmbush()
+        self.IsChampion()
+        self.MobsLink()
         self.MobsLevel()
-        if(re.search("⚜️Forbidden Champion",self.message.text)):
-            self.is_champion = True
-            self.PinChamp()
-            self.GivePots()
-        self.Ping()
-        while (time.time() - self.message.forward_date < self.timer):
-            if(self._force_update == False):
-                now = time.time()
-                timers = "⏰: " + "<b>{}</b>".format("{:02d}:{:02d}".format(int((self.timer - (now - self.message.forward_date)) / 60), int((self.timer - (now - self.message.forward_date)) % 60)))
-                answer = self.mobs_text + "\n" + timers + "\n\n" + "<b>👑 Хокаге по вызову:\n</b>" + self.helpers()
-                if (type(RoyalTrident_bot.edit_message_text(answer, self.message.chat.id, self.message_for_update.message_id, parse_mode='HTML',reply_markup= self.mobs_markups("⚔️ В бой", "🤝 Помогаю"))) == "bool"):
-                    time.sleep(9)
-                else:
-                    time.sleep(5)
-        answer = self.mobs_text + "⏰:РИП\n\n" + "<b>👑 Хокаге по вызову:\n</b>" + self.helpers()
-        RoyalTrident_bot.edit_message_text(answer, self.message.chat.id, self.message_for_update.message_id, parse_mode='HTML')
 
-    def helpers(self):
+    def StartAndUpdating(self):
+        self.Ping()
+        self.Updating()
+        isFinalize = True
+        while (isFinalize):
+            answer = self.mobs_text + "⏰:РИП\n\n" + "<b>👑 Хокаге по вызову:\n</b>" + self.Helpers()
+            message = Bot.edit_message_text(answer, self.message.chat.id, self.message_for_update.message_id, parse_mode='HTML')
+            Response = message.wait()
+            isFinalize = self.TooManyReqestCheck(Response)
+
+
+    def Updating(self):
+        while (self.IsActualMob()):
+            if (self._force_update == False):
+                Response = self.DoUpdate()
+                response = Response.wait()
+                if (self.TooManyReqestCheck(response)):
+                    time.sleep(5)
+                else:
+                    time.sleep(2)
+
+    def Helpers(self):
         answer = ''
         n = 1
         for helper in self.helpers_list:
-            answer += "<b>" + str(n) + "."  "</b>"  + nonestr(helper.first_name) +' ' +nonestr(helper.last_name) +' ' + "(" + '@'+nonestr(helper.username) + ")" + '\n'
+            answer += "<b>" + str(n) + "."  "</b>" + EmptyStringCheck(helper.first_name) + ' ' + EmptyStringCheck(helper.last_name) + ' ' + "(" + '@' + EmptyStringCheck(helper.username) + ")" + '\n'
             n+=1
         return answer
 
@@ -68,16 +75,9 @@ class Mob:
 
     def ForceUpdate(self):
         self._force_update = True
-        if(time.time() - self.message.forward_date < self.timer):
-            now = time.time()
-            timers = "⏰: " + "<b>{}</b>".format("{:02d}:{:02d}".format(int((self.timer - (now - self.message.forward_date)) / 60),int((self.timer - (now - self.message.forward_date)) % 60)))
-            answer = self.mobs_text + "\n" + timers + "\n\n" + "<b>👑 Хокаге по вызову:\n</b>" + self.helpers()
-            RoyalTrident_bot.edit_message_text(answer, self.message.chat.id, self.message_for_update.message_id,
-                                               parse_mode='HTML', reply_markup=self.mobs_markups("⚔️ В бой", "🤝 Помогаю"))
+        if (self.IsActualMob()):
+            self.DoUpdate()
         self._force_update = False
-
-    def PinChamp(self):
-        RoyalTrident_bot.pin_chat_message(self.message_for_update.chat.id,self.message_for_update.message_id,disable_notification = True)
 
     def MobsText(self):
           answer = self.message.text.split('\n')
@@ -88,23 +88,12 @@ class Mob:
               new_answer = new_answer + "<b>{}</b>".format(element) + "\n"
           return new_answer
 
-    def Ping(self): #Разница между мобами и игроком не превышает 10 лвлов
+    def Ping(self):
         PingList = list()
         for User in Guild.GuildList:
-            print(abs(User.ChatWarsLvl - self._MobsLevel))
             if(((abs(User.ChatWarsLvl - self._MobsLevel)) <= self.RANGE_FOR_BATTLE_TAKE) and (User.isMain == True) ):
                 PingList.append('@' + User.Username)
         PingByFive(self.message.chat.id,PingList)
-
-    def GivePots(self):
-        answer = "/g_withdraw"+" p04 " + str(1) + " p05 " + str(1) + " p06 " + str(1)
-        answer_url = urllib.parse.quote(answer, )
-        answer_html = '<a href="https://t.me/share/url?url=' + answer_url + '">' + "Писы" + '</a>'
-        RoyalTrident_bot.send_message(self.message.chat.id,answer_html,parse_mode='HTML')
-        answer = "/g_withdraw"+" p01 " + str(1) + " p02 " + str(1) + " p03 " + str(1)
-        answer_url = urllib.parse.quote(answer,)
-        answer_html = '<a href="https://t.me/share/url?url=' + answer_url + '">' + "Раги" + '</a>'
-        RoyalTrident_bot.send_message(self.message.chat.id,answer_html,parse_mode='HTML')
 
     def MobsLevel(self):
         AllNumber = 0
@@ -125,14 +114,41 @@ class Mob:
                 AllNumber += int(Number)
                 self._MobsLevel += int(Number) * int(Lvl)
         self._MobsLevel = self._MobsLevel / AllNumber
-        '\d\sx\s' #Количество в строке
-        "lvl.\d{1, 3}" # lvl.NN
 
-def nonestr(x):
-    if x is None:
-      return ""
-    return x
+    def IsChampion(self):
+        if(re.search("⚜️Forbidden Champion",self.message.text)):
+            self.is_champion = True
+            self.PinChamp()
+            GivePots(self.message.chat.id)
+
+    def DoUpdate(self):
+            now = time.time()
+            timers = "⏰: " + "<b>{}</b>".format("{:02d}:{:02d}".format(int((self.timer - (now - self.message.forward_date)) / 60),int((self.timer - (now - self.message.forward_date)) % 60)))
+            answer = self.mobs_text + "\n" + timers + "\n\n" + "<b>👑 Хокаге по вызову:\n</b>" + self.Helpers()
+            response = Bot.edit_message_text(answer, self.message.chat.id, self.message_for_update.message_id,
+                                  parse_mode='HTML', reply_markup=self.MobsMarkups("⚔️ В бой", "🤝 Помогаю"))
+            return response
+
+    def TooManyReqestCheck(self,Response):
+        try:
+            return Response.result[1].result.status_code == 429
+        except:
+            return False
+
+    def IsActualMob(self):
+        return time.time() - self.message.forward_date < self.timer
+
+    def PinChamp(self):
+        Bot.pin_chat_message(self.message_for_update.chat.id, self.message_for_update.message_id, disable_notification = True)
+
+    def IsAmbush(self):
+        if (re.search("It's an ambush!", self.message.text)):
+            self.is_ambush = True
+            self.timer = 360
+        self.is_ambush = False
+        self.timer = 180
 
 
-
-
+    def MobsLink(self):
+        link = re.search("\/fight.{1,100}", self.message.text)
+        self.link = link.group(0)

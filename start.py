@@ -4,37 +4,39 @@ from psycopg2 import sql
 from MobWorker import  update_helpers, find_mobs_message
 from stock import stock,give_any
 from time_trigger import PingOnBattleAndUpdateUsers
-from Global import RoyalTrident_bot
+from Global import Bot
 
 conn = psycopg2.connect(database = 'postgres', user = 'Phantasm', password = '123Anapa2017', host= 'localhost', port = 5432)
 db = conn.cursor()
 
-@RoyalTrident_bot.message_handler(func=lambda message: message.forward_from is not None and message.forward_from.username == "ChatWarsBot",regexp = "🖤Royal Trident")
+
+
+@Bot.message_handler(func=lambda message: message.forward_from is not None and message.forward_from.username == "ChatWarsBot", regexp ="🖤Royal Trident")
 def decorated_wake_up_guild(message):
     PingOnBattleAndUpdateUsers(message)
 
-@RoyalTrident_bot.callback_query_handler(func=lambda call: True)
+@Bot.callback_query_handler(func=lambda call: True)
 def decorated_update_helpers(call):
   update_helpers(call)
 
-@RoyalTrident_bot.message_handler(func=lambda message: message.forward_from is not None and message.forward_from.username == "ChatWarsBot",regexp = "Ты заметил враждебных существ. " )
+@Bot.message_handler(func=lambda message: message.forward_from is not None and message.forward_from.username == "ChatWarsBot", regexp ="Ты заметил враждебных существ. ")
 def decorated_find_mobs_message(message):
   find_mobs_message(message)
 
-@RoyalTrident_bot.message_handler(regexp= "[Лл]авки")
+@Bot.message_handler(regexp="[Лл]авки")
 def timed_resolve(message):
     answer =''' Вишня — <a href="http://t.me/share/url?url=/ws_chery">/ws_chery</a>''' + '\n'+ '''Пруфе — <a href="http://t.me/share/url?url=/ws_happy">/ws_happy</a>''' + '\n'+'''Мейв — <a href="http://t.me/share/url?url=/ws_FnwIe">/ws_FnwIe</a>'''  + '\n'+ '''Мрак — <a href="http://t.me/share/url?url=/ws_lT0Rm">/ws_lT0Rm</a>''' + '\n'+'''Фарфель — <a href="http://t.me/share/url?url=/ws_XioEX">/ws_XioEX</a>'''
-    RoyalTrident_bot.send_message(message.chat.id,answer,parse_mode = 'HTML')
+    Bot.send_message(message.chat.id, answer, parse_mode ='HTML')
 
-@RoyalTrident_bot.message_handler(func = lambda message: message.forward_from is not None and message.forward_from.username == "ChatWarsBot")
+@Bot.message_handler(func = lambda message: message.forward_from is not None and message.forward_from.username == "ChatWarsBot")
 def decorated_stock(message):
     stock(message)
 
-@RoyalTrident_bot.message_handler(regexp="^([дД]ай|[Ll]fq)\s")
+@Bot.message_handler(regexp="^([дД]ай|[Ll]fq)\s")
 def decorated_give_any(message):
     give_any(message)
 
-@RoyalTrident_bot.message_handler(commands = ['info'])
+@Bot.message_handler(commands = ['info'])
 def info(message):
     message_str = str()
     reply = message.reply_to_message
@@ -79,13 +81,13 @@ def info(message):
 
     user_str = '<b>' + 'User: '+ '</b>' + Nonestr(first_name) + Nonestr(last_name) + '(' + Nonestr(username) + ('/' if len(Nonestr(username)) > 0 else "") + '<code>' + user_id  + '</code>'  + ')' + '\n'
     answer = message_str + user_str + date_str
-    RoyalTrident_bot.send_message(chat_id, answer,parse_mode = 'HTML')
+    Bot.send_message(chat_id, answer, parse_mode ='HTML')
 
-@RoyalTrident_bot.message_handler(commands = ['chat_id'])
+@Bot.message_handler(commands = ['chat_id'])
 def chat_id(message):
-    RoyalTrident_bot.reply_to(message, message.chat.id)
+    Bot.reply_to(message, message.chat.id)
 
-@RoyalTrident_bot.message_handler(commands = ['show_triggers'])
+@Bot.message_handler(commands = ['show_triggers'])
 def show_triggers(message):
   chat_id = str(message.chat.id)
   create_table_chat_id(chat_id)
@@ -96,9 +98,9 @@ def show_triggers(message):
   stred ='Список триггеров : \n'
   for i in answer :
     stred += i[0]+ '\n'    
-  RoyalTrident_bot.reply_to(message, stred)
+  Bot.reply_to(message, stred)
 
-@RoyalTrident_bot.message_handler (commands = ['add_trigger'])
+@Bot.message_handler (commands = ['add_trigger'])
 def add_trigger(message):
       chat_id = str(message.chat.id)
       create_table_chat_id(chat_id)
@@ -125,43 +127,43 @@ def add_trigger(message):
       if(reply.audio is not None):
          db.execute(sql.SQL('''INSERT INTO {} (ask,answer,type) VALUES ( %s, %s,%s)''').format(sql.Identifier(chat_id)),(ask ,reply.audio(0).file_id, 'audio'))
          conn.commit()
-         RoyalTrident_bot.reply_to(message, 'Аудио добавлено')
+         Bot.reply_to(message, 'Аудио добавлено')
 
 
       if(reply.video_note is not None):
          db.execute(sql.SQL('''INSERT INTO {} (ask,answer,type) VALUES ( %s, %s,%s)''').format(sql.Identifier(chat_id)),(ask ,reply.video_note.file_id, 'video_note'))
          conn.commit()
-         RoyalTrident_bot.reply_to(message, 'Кругляш добавлен')
+         Bot.reply_to(message, 'Кругляш добавлен')
 
 
 
       elif(reply.document is not None):
           db.execute(sql.SQL('''INSERT INTO {} (ask,answer,type) VALUES ( %s, %s,%s)''').format(sql.Identifier(chat_id)),(ask ,reply.document.file_id, 'document'))
           conn.commit()
-          RoyalTrident_bot.reply_to(message, 'Документ добавлен')
+          Bot.reply_to(message, 'Документ добавлен')
 
       elif(reply.photo is not None):
           image = reply.photo[0]
           db.execute(sql.SQL('''INSERT INTO {} (ask,answer,type) VALUES ( %s, %s,%s)''').format(sql.Identifier(chat_id)), (ask ,image.file_id, 'photo'))
           conn.commit()
-          RoyalTrident_bot.reply_to(message, 'Фото добавлено')
+          Bot.reply_to(message, 'Фото добавлено')
 
       elif(reply.video is not None):
           db.execute(sql.SQL('''INSERT INTO {} (ask,answer,type) VALUES ( %s, %s,%s)''').format(sql.Identifier(chat_id)),(ask ,reply.video.file_id, 'video'))
           conn.commit()
-          RoyalTrident_bot.reply_to(message, 'Видео добавлено')
+          Bot.reply_to(message, 'Видео добавлено')
 
       elif(reply.voice is not None):
           db.execute(sql.SQL('''INSERT INTO {} (ask,answer,type) VALUES ( %s, %s,%s)''').format(sql.Identifier(chat_id)) ,(ask ,reply.voice.file_id, 'voice'))
           conn.commit()
-          RoyalTrident_bot.reply_to(message, 'Войс добавлен')
+          Bot.reply_to(message, 'Войс добавлен')
 
       elif(reply.text is not None):
           db.execute(sql.SQL('''INSERT INTO {} (ask,answer,type) VALUES ( %s, %s,%s)''').format(sql.Identifier(chat_id)) ,(ask ,reply.text, 'text'))
           conn.commit()
-          RoyalTrident_bot.reply_to(message, 'Текст добавлен')
+          Bot.reply_to(message, 'Текст добавлен')
 
-@RoyalTrident_bot.message_handler(commands = ['del_trigger'])
+@Bot.message_handler(commands = ['del_trigger'])
 def del_trigger(message):
     chat_id = str(message.chat.id)
     create_table_chat_id(chat_id)
@@ -173,9 +175,9 @@ def del_trigger(message):
       ask = ask[1:]
       db.execute(sql.SQL('''DELETE FROM {} WHERE ask = %s''').format(sql.Identifier(chat_id)),(ask,))
       conn.commit()
-      RoyalTrident_bot.reply_to(message, 'Команда удалена')
+      Bot.reply_to(message, 'Команда удалена')
 
-@RoyalTrident_bot.message_handler(func = lambda message:True)
+@Bot.message_handler(func = lambda message:True)
 def any_trigger(message):
      chat_id = str(message.chat.id)
      create_table_chat_id(chat_id)
@@ -194,25 +196,25 @@ def any_trigger(message):
      answer = _answer[0]
      if(_type is not None):
            if(_type=='audio'):
-              RoyalTrident_bot.send_audio(chat_id,answer)
+              Bot.send_audio(chat_id, answer)
            elif(_type =='document'):
-              RoyalTrident_bot.send_document(chat_id,answer)
+              Bot.send_document(chat_id, answer)
 
            elif(_type =='photo'):
-              RoyalTrident_bot.send_photo(chat_id,answer)
+              Bot.send_photo(chat_id, answer)
 
            elif(_type =='video'):
-              RoyalTrident_bot.send_video(chat_id,answer)
+              Bot.send_video(chat_id, answer)
 
            elif(_type =='video_note'):
-              RoyalTrident_bot.send_video_note(chat_id,answer)
+              Bot.send_video_note(chat_id, answer)
 
            elif(_type =='voice'):
-              RoyalTrident_bot.send_voice(chat_id,answer)
+              Bot.send_voice(chat_id, answer)
 
            elif(_type =='text'):
               if answer is not None and len(answer) > 0:
-                  RoyalTrident_bot.reply_to(message, answer)
+                  Bot.reply_to(message, answer)
 
 def updater(message,reply,chat_id,ask):
 
@@ -221,14 +223,14 @@ def updater(message,reply,chat_id,ask):
          conn.commit()
          db.execute(sql.SQL('''UPDATE  {} SET  type = %s WHERE ask = %s''').format(sql.Identifier(chat_id)),('audio', ask ,))
          conn.commit() 
-         RoyalTrident_bot.reply_to(message, 'Аудио перезаписано')
+         Bot.reply_to(message, 'Аудио перезаписано')
 
       elif(reply.document is not None):
         db.execute(sql.SQL('''UPDATE  {} SET  answer = %s WHERE ask = %s''').format(sql.Identifier(chat_id)),(reply.document.file_id, ask ,))
         conn.commit()
         db.execute(sql.SQL('''UPDATE  {} SET  type = %s WHERE ask = %s''').format(sql.Identifier(chat_id)),('document', ask ,))
         conn.commit()
-        RoyalTrident_bot.reply_to(message, 'Документ перезаписан')
+        Bot.reply_to(message, 'Документ перезаписан')
 
       elif(reply.photo is not None):
         image = reply.photo[0]
@@ -237,14 +239,14 @@ def updater(message,reply,chat_id,ask):
         db.execute(sql.SQL('''UPDATE  {} SET  type = %s WHERE ask = %s''').format(sql.Identifier(chat_id)) ,( 'photo',ask))
         conn.commit()
 
-        RoyalTrident_bot.reply_to(message, 'Фото перезаписано')
+        Bot.reply_to(message, 'Фото перезаписано')
 
       elif(reply.video is not None):
         db.execute(sql.SQL('''UPDATE  {} SET  answer = %s WHERE ask = %s''').format(sql.Identifier(chat_id)),(reply.video.file_id,ask,))
         conn.commit()
         db.execute(sql.SQL('''UPDATE  {} SET  type = %s WHERE ask = %s''').format(sql.Identifier(chat_id)) ,( 'video',ask))
         conn.commit()
-        RoyalTrident_bot.reply_to(message, 'Видео перезаписано')
+        Bot.reply_to(message, 'Видео перезаписано')
 
 
       elif(reply.video_note is not None):
@@ -252,7 +254,7 @@ def updater(message,reply,chat_id,ask):
         conn.commit()
         db.execute(sql.SQL('''UPDATE  {} SET  type = %s WHERE ask = %s''').format(sql.Identifier(chat_id)) ,( 'video_note',ask))
         conn.commit()
-        RoyalTrident_bot.reply_to(message, 'Кругляш перезаписан')
+        Bot.reply_to(message, 'Кругляш перезаписан')
 
 
       elif(reply.voice is not None):
@@ -260,14 +262,14 @@ def updater(message,reply,chat_id,ask):
         conn.commit()
         db.execute(sql.SQL('''UPDATE  {} SET  type = %s WHERE ask = %s''').format(sql.Identifier(chat_id)) ,( 'voice',ask))
         conn.commit()
-        RoyalTrident_bot.reply_to(message, 'Войс перезаписан')
+        Bot.reply_to(message, 'Войс перезаписан')
 
       elif(reply.text is not None):
         db.execute(sql.SQL('''UPDATE  {} SET  answer = %s WHERE ask = %s''').format(sql.Identifier(chat_id)) ,(reply.text,ask))
         conn.commit()
         db.execute(sql.SQL('''UPDATE  {} SET  type = %s WHERE ask = %s''').format(sql.Identifier(chat_id)) ,( 'text',ask))
         conn.commit()
-        RoyalTrident_bot.reply_to(message, 'Текст перезаписан')
+        Bot.reply_to(message, 'Текст перезаписан')
 
 def create_table_chat_id(chat_id):
  db.execute(sql.SQL(' CREATE TABLE IF NOT EXISTS {} (id serial NOT NULL, ask text, answer text, type text)').format(sql.Identifier(chat_id)))
@@ -286,7 +288,7 @@ def give_additional_any(result,message):
               answer += i 
     answer_url = urllib.parse.quote(answer,)
     answer_html = '<a href="https://t.me/share/url?url=' + answer_url +  '">'+ answer + '</a>'
-    RoyalTrident_bot.send_message(message.chat.id,answer_html,parse_mode = 'HTML')
+    Bot.send_message(message.chat.id, answer_html, parse_mode ='HTML')
 
 def convert(tuple):
     new_list = list()
@@ -302,7 +304,7 @@ def lower_check(table_list,ask):
   return False
 
 def main():
-    RoyalTrident_bot.polling(none_stop=True)
+    Bot.polling(none_stop=True)
 
 if __name__ == '__main__':
   main()

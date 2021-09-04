@@ -1,4 +1,4 @@
-import telebot
+from MessageManager import MessageManager
 from Guild import Guild
 
 TEST_MODE = True
@@ -15,6 +15,6 @@ TEST_USER = 'Phantasm'
 Guild = Guild()
 
 
-RoyalTrident_bot = telebot.AsyncTeleBot('1125612607:AAG4o5Myw3TB8ZnYfBbnRMZ0AdW_YG1EVMQ')
+Bot = MessageManager('1125612607:AAG4o5Myw3TB8ZnYfBbnRMZ0AdW_YG1EVMQ')
 
 

@@ -49,7 +49,8 @@ class Guild:
         self.Tea.AddTwink(self.Kronprincen)
 
         self.Scuns.AddTwink(self.catLeopold)
-
+        self.Scuns.AddTwink(self.larina457)
+        self.Scuns.AddTwink(self.phenjan)
         return [self.Bekmuart, self.Scuns, self.Igor, self.Tea, self.Vasde, self.larina457,
                 self.Ksandrax, self.EPetuhov, self.undfndnm, self.Soare, self.Andrey,
                     self.AlexanderKobets, self.Dark, self.phenjan, self.Tahena, self.m1sha007, self.Cerethrius, self.Phantasm,

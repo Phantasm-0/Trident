@@ -1,5 +1,5 @@
 import urllib.parse, re
-from Global import RoyalTrident_bot
+from Global import Bot
 
 resource_pack = {'Thread': '01',
                  'Stick': '02',
@@ -491,7 +491,7 @@ def stock(message):
                     answer_name = g + "(" + amount_answer + ")"
                     answer += html_start_string + answer_url + '">' + answer_name + '</a>' + '\n'
 
-    RoyalTrident_bot.send_message(message.chat.id, str(answer + '\n\n' + give_all), parse_mode='HTML')
+    Bot.send_message(message.chat.id, str(answer + '\n\n' + give_all), parse_mode='HTML')
 
 
 def give_any(message):
@@ -523,7 +523,7 @@ def give_any(message):
         return
     answer_url = urllib.parse.quote(answer, )
     answer_html = '<a href="https://t.me/share/url?url=' + answer_url + '">' + answer + '</a>'
-    RoyalTrident_bot.send_message(message.chat.id, answer_html, parse_mode='HTML')
+    Bot.send_message(message.chat.id, answer_html, parse_mode='HTML')
 
 
 def give_additional_any(result, message):
@@ -534,7 +534,7 @@ def give_additional_any(result, message):
             answer += i
     answer_url = urllib.parse.quote(answer, )
     answer_html = '<a href="https://t.me/share/url?url=' + answer_url + '">' + answer + '</a>'
-    RoyalTrident_bot.send_message(message.chat.id, answer_html, parse_mode='HTML')
+    Bot.send_message(message.chat.id, answer_html, parse_mode='HTML')
 
 
 def give_additional_all(regex, list_for_search, g_what, answer_name):
