@@ -54,7 +54,7 @@ def create_list_for_ping(text):
     list_for_ping = list()
     for user in guild_keys:
         if((re.search("🛌]\s"+user,text)) or (re.search("⚒]\s"+user,text)) or (re.search("⚗️]\s"+user,text))):
-            list_for_ping.extend('@' + guild_dict[user])
+            list_for_ping.extend(guild_dict[user])
     if((re.search("🛌]\s"+'Bekish',text)) or (re.search("⚒]\s"+'Bekish',text)) or (re.search("⚗️]\s"+'Bekish',text)) or (re.search("🌲]\s"+'Bekish',text)) ):
-            list_for_ping.extend(  ['@bekmurat'])
+            list_for_ping.extend(  ['bekmurat'])
     return list(set(list_for_ping))
