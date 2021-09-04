@@ -6,7 +6,7 @@ from stock import stock,give_any
 from time_trigger import PingOnBattleAndUpdateUsers
 from Global import Bot
 
-conn = psycopg2.connect(database = 'postgres', user = 'Phantasm', password = '123Anapa2017', host= 'localhost', port = 5432)
+conn = psycopg2.connect(database = 'postgres', user = 'postgres', password = '123Anapa2017', host= 'localhost', port = 5432)
 db = conn.cursor()
 
 
