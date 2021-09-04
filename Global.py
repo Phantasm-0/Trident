@@ -15,6 +15,6 @@ TEST_USER = 'Phantasm'
 Guild = Guild()
 
 
-Bot = MessageManager('1125612607:AAG4o5Myw3TB8ZnYfBbnRMZ0AdW_YG1EVMQ')
+Bot = MessageManager('1222435814:AAFPEFv8ad_2xBIuYUMc5aIDxqKGhAKRijo')
 
 
