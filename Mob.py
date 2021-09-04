@@ -23,12 +23,12 @@ class Mob:
         self._MobsLevel = int()
         self.RANGE_FOR_BATTLE_TAKE = 10
         self.IsAmbush()
-        self.IsChampion()
         self.MobsLink()
         self.MobsLevel()
 
     def StartAndUpdating(self):
-        self.Ping()
+        if(self.IsChampion() is False):
+            self.Ping()
         self.Updating()
         isFinalize = True
         while (isFinalize):
@@ -120,6 +120,8 @@ class Mob:
             self.is_champion = True
             self.PinChamp()
             GivePots(self.message.chat.id)
+            return True
+        return False
 
     def DoUpdate(self):
             now = time.time()
