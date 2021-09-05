@@ -1,6 +1,6 @@
 import urllib
 
-from Global import Bot
+from Global import Bot,MY_CHAT_WITH_BOT
 
 def PingByFive(ChatId,ListToPing):
     Answer = str()
@@ -29,6 +29,12 @@ def LowerCheck(List,Ask):
     if(Node.lower() == Ask.lower()):
       return Node
   return False
+
+def TryAndSendExceptMe(myfunc):
+    try:
+        myfunc()
+    except Exception as inst:
+        Bot.send_message(MY_CHAT_WITH_BOT, inst)
 
 def EmptyStringCheck(x):
     if x is None:

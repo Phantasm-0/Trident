@@ -20,17 +20,11 @@ def decorated_wake_up_guild(message):
 
 @Bot.callback_query_handler(func=lambda call: True)
 def decorated_update_helpers(call):
-    try:
         update_helpers(call)
-    except Exception as inst:
-        Bot.send_message(MY_CHAT_WITH_BOT,inst)
 
 @Bot.message_handler(func=lambda message: message.forward_from is not None and message.forward_from.username == "ChatWarsBot", regexp ="Ты заметил враждебных существ. ")
 def decorated_find_mobs_message(message):
-    try:
         find_mobs_message(message)
-    except Exception as inst:
-        Bot.send_message(MY_CHAT_WITH_BOT,inst)
 
 @Bot.message_handler(regexp="[Лл]авки")
 def timed_resolve(message):
