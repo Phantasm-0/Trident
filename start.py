@@ -4,7 +4,7 @@ from psycopg2 import sql
 from MobWorker import  update_helpers, find_mobs_message
 from stock import stock,give_any
 from time_trigger import PingOnBattleAndUpdateUsers
-from Global import Bot
+from Global import Bot, MY_CHAT_WITH_BOT
 
 conn = psycopg2.connect(database = 'postgres', user = 'postgres', password = '123Anapa2017', host= 'localhost', port = 5432)
 db = conn.cursor()
@@ -13,15 +13,24 @@ db = conn.cursor()
 
 @Bot.message_handler(func=lambda message: message.forward_from is not None and message.forward_from.username == "ChatWarsBot", regexp ="🖤Royal Trident")
 def decorated_wake_up_guild(message):
-    PingOnBattleAndUpdateUsers(message)
+    try:
+        PingOnBattleAndUpdateUsers(message)
+    except Exception as inst:
+        Bot.send_message(MY_CHAT_WITH_BOT,inst)
 
 @Bot.callback_query_handler(func=lambda call: True)
 def decorated_update_helpers(call):
-  update_helpers(call)
+    try:
+        update_helpers(call)
+    except Exception as inst:
+        Bot.send_message(MY_CHAT_WITH_BOT,inst)
 
 @Bot.message_handler(func=lambda message: message.forward_from is not None and message.forward_from.username == "ChatWarsBot", regexp ="Ты заметил враждебных существ. ")
 def decorated_find_mobs_message(message):
-  find_mobs_message(message)
+    try:
+        find_mobs_message(message)
+    except Exception as inst:
+        Bot.send_message(MY_CHAT_WITH_BOT,inst)
 
 @Bot.message_handler(regexp="[Лл]авки")
 def timed_resolve(message):
@@ -89,19 +98,23 @@ def chat_id(message):
 
 @Bot.message_handler(commands = ['show_triggers'])
 def show_triggers(message):
-  chat_id = str(message.chat.id)
-  create_table_chat_id(chat_id)
-  db.execute(sql.SQL('''SELECT ask FROM {} ''').format(sql.Identifier(chat_id)))
-  if(db.statusmessage == 'SELECT 0'):
-    return
-  answer = db.fetchall()
-  stred ='Список триггеров : \n'
-  for i in answer :
-    stred += i[0]+ '\n'    
-  Bot.reply_to(message, stred)
+    try:
+        chat_id = str(message.chat.id)
+        create_table_chat_id(chat_id)
+        db.execute(sql.SQL('''SELECT ask FROM {} ''').format(sql.Identifier(chat_id)))
+        if(db.statusmessage == 'SELECT 0'):
+            return
+        answer = db.fetchall()
+        stred ='Список триггеров : \n'
+        for i in answer :
+            stred += i[0]+ '\n'
+        Bot.reply_to(message, stred)
+    except Exception as inst:
+        Bot.send_message(MY_CHAT_WITH_BOT,inst)
 
 @Bot.message_handler (commands = ['add_trigger'])
 def add_trigger(message):
+    try:
       chat_id = str(message.chat.id)
       create_table_chat_id(chat_id)
       reply = message.reply_to_message
@@ -162,59 +175,67 @@ def add_trigger(message):
           db.execute(sql.SQL('''INSERT INTO {} (ask,answer,type) VALUES ( %s, %s,%s)''').format(sql.Identifier(chat_id)) ,(ask ,reply.text, 'text'))
           conn.commit()
           Bot.reply_to(message, 'Текст добавлен')
+    except Exception as inst:
+        Bot.send_message(MY_CHAT_WITH_BOT,inst)
 
 @Bot.message_handler(commands = ['del_trigger'])
 def del_trigger(message):
-    chat_id = str(message.chat.id)
-    create_table_chat_id(chat_id)
-    if (len(message.text) >= 14):
-      ask_result = re.search("\s.*",message.text)
-      ask = ask_result.group(0)
-      ask_result = re.search(".*",ask)
-      ask = ask_result.group(0)
-      ask = ask[1:]
-      db.execute(sql.SQL('''DELETE FROM {} WHERE ask = %s''').format(sql.Identifier(chat_id)),(ask,))
-      conn.commit()
-      Bot.reply_to(message, 'Команда удалена')
+    try:
+        chat_id = str(message.chat.id)
+        create_table_chat_id(chat_id)
+        if (len(message.text) >= 14):
+          ask_result = re.search("\s.*",message.text)
+          ask = ask_result.group(0)
+          ask_result = re.search(".*",ask)
+          ask = ask_result.group(0)
+          ask = ask[1:]
+          db.execute(sql.SQL('''DELETE FROM {} WHERE ask = %s''').format(sql.Identifier(chat_id)),(ask,))
+          conn.commit()
+          Bot.reply_to(message, 'Команда удалена')
+    except Exception as inst:
+        Bot.send_message(MY_CHAT_WITH_BOT,inst)
 
 @Bot.message_handler(func = lambda message:True)
 def any_trigger(message):
-     chat_id = str(message.chat.id)
-     create_table_chat_id(chat_id)
-     db.execute(sql.SQL('''SELECT ask FROM {}''').format(sql.Identifier(chat_id)))
-     result = db.fetchall()
-     result = convert(result)
-     if(lower_check(result,message.text)!= False):  
-       ask = lower_check(result,message.text)
-     else:
-         return
-     db.execute(sql.SQL('''SELECT type FROM {} WHERE ask =  %s''').format(sql.Identifier(chat_id)) , (ask,))
-     type_ = db.fetchone()
-     _type = type_[0]
-     db.execute(sql.SQL('''SELECT answer FROM {} WHERE ask =  %s''').format(sql.Identifier(chat_id)) , (ask,))
-     _answer = db.fetchone()
-     answer = _answer[0]
-     if(_type is not None):
-           if(_type=='audio'):
-              Bot.send_audio(chat_id, answer)
-           elif(_type =='document'):
-              Bot.send_document(chat_id, answer)
+    try:
+         chat_id = str(message.chat.id)
+         create_table_chat_id(chat_id)
+         db.execute(sql.SQL('''SELECT ask FROM {}''').format(sql.Identifier(chat_id)))
+         result = db.fetchall()
+         result = convert(result)
+         if(lower_check(result,message.text)!= False):
+           ask = lower_check(result,message.text)
+         else:
+             return
+         db.execute(sql.SQL('''SELECT type FROM {} WHERE ask =  %s''').format(sql.Identifier(chat_id)) , (ask,))
+         type_ = db.fetchone()
+         _type = type_[0]
+         db.execute(sql.SQL('''SELECT answer FROM {} WHERE ask =  %s''').format(sql.Identifier(chat_id)) , (ask,))
+         _answer = db.fetchone()
+         answer = _answer[0]
+         if(_type is not None):
+               if(_type=='audio'):
+                  Bot.send_audio(chat_id, answer)
+               elif(_type =='document'):
+                  Bot.send_document(chat_id, answer)
 
-           elif(_type =='photo'):
-              Bot.send_photo(chat_id, answer)
+               elif(_type =='photo'):
+                  Bot.send_photo(chat_id, answer)
 
-           elif(_type =='video'):
-              Bot.send_video(chat_id, answer)
+               elif(_type =='video'):
+                  Bot.send_video(chat_id, answer)
 
-           elif(_type =='video_note'):
-              Bot.send_video_note(chat_id, answer)
+               elif(_type =='video_note'):
+                  Bot.send_video_note(chat_id, answer)
 
-           elif(_type =='voice'):
-              Bot.send_voice(chat_id, answer)
+               elif(_type =='voice'):
+                  Bot.send_voice(chat_id, answer)
 
-           elif(_type =='text'):
-              if answer is not None and len(answer) > 0:
-                  Bot.reply_to(message, answer)
+               elif(_type =='text'):
+                  if answer is not None and len(answer) > 0:
+                      Bot.reply_to(message, answer)
+    except Exception as inst:
+        Bot.send_message(MY_CHAT_WITH_BOT,inst)
 
 def updater(message,reply,chat_id,ask):
 
