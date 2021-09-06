@@ -6,7 +6,7 @@ class MessageManager(telebot.AsyncTeleBot) :
         Answer = str()
         Counter = 0
         for User in ListToPing:
-            Answer += '@' +User + ' '
+            Answer += '@' + User + ' '
             Counter += 1
             if (Counter == 5):
                 self.send_message(ChatId, Answer)

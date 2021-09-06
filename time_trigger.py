@@ -1,6 +1,6 @@
 import datetime,re
 from MobWorker import  UserLevelUpdate
-from Utility import PingByFive
+from Global import Bot
 guild_dict = {
 'Bekish': ['bekmurat'],
 'Scuns87':['Scuns87'],
@@ -47,8 +47,8 @@ def PingOnBattleAndUpdateUsers(message):
     now = datetime.datetime.fromtimestamp(message.date,tz)
     for  time_f in const_times_f:
         if((time_f.hour - now.hour  == 0) and (now.minute  - time_f.minute > 0) and (time_f.minute - now.minute <= 14)):
-                list_for_ping = create_list_for_ping(message.text)
-                PingByFive(message.chat.id, list_for_ping)
+            list_for_ping = create_list_for_ping(message.text)
+            Bot.PingByFive(message.chat.id, list_for_ping)
 
 def create_list_for_ping(text):
     list_for_ping = list()

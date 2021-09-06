@@ -1,5 +1,5 @@
 from Utility import PingByFive
-import time,re,urllib
+import time,re
 from telebot import types
 from Global import Bot,Guild
 from Utility import EmptyStringCheck, GivePots
