@@ -40,13 +40,15 @@ class Mob:
     def Updating(self):
         while (self.IsActualMob()):
             if (self._force_update == False):
-                Response = self.DoUpdate()
-                response = Response.wait()
-                if (self.TooManyReqestCheck(response)):
+                try:
+                    Response = self.DoUpdate()
+                    response = Response.wait()
+                    if (self.TooManyReqestCheck(response)):
+                        time.sleep(5)
+                    else:
+                        time.sleep(2)
+                except:
                     time.sleep(5)
-                else:
-                    time.sleep(2)
-
     def Helpers(self):
         answer = ''
         n = 1
