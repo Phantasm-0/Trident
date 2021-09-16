@@ -1,7 +1,12 @@
 import telebot
 import urllib
-
+from telebot.apihelper import ApiException
+from Global import MY_CHAT_WITH_BOT
 class MessageManager(telebot.AsyncTeleBot) :
+    def __int__(self):
+        super(MessageManager, self).__int__(
+
+        )
     def PingByFive(self,ChatId, ListToPing):
         Answer = str()
         Counter = 0
@@ -22,3 +27,14 @@ class MessageManager(telebot.AsyncTeleBot) :
         answer_url = urllib.parse.quote(answer, )
         answer_html = '<a href="https://t.me/share/url?url=' + answer_url + '">' + "Раги" + '</a>'
         self.Bot.send_message(ChatId, answer_html, parse_mode='HTML')
+    def SendWithShareLink(self,ChatId,AnswerForHTML,AnswerForDisplay):
+        AnswerForHTML = urllib.parse.quote(AnswerForHTML, )
+        AnswerForSend = f'<a href="https://t.me/share/url?url={AnswerForHTML}">{AnswerForDisplay} </a>'
+        self.Bot.send_message(ChatId, AnswerForSend, parse_mode='HTML')
+
+
+    def edit_message_text(self, *args, **kwargs):
+        try:
+            super().edit_message_text(args,kwargs)
+        except ApiException as Error:
+            self.send_message(MY_CHAT_WITH_BOT,str(Error))

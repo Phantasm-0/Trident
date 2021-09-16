@@ -1,8 +1,7 @@
-from Utility import PingByFive
+from Utility import EmptyStringCheck
 import time,re
 from telebot import types
 from Global import Bot,Guild
-from Utility import EmptyStringCheck, GivePots
 
 
 
@@ -93,10 +92,11 @@ class Mob:
         for User in Guild.GuildList:
             if(((abs(User.ChatWarsLvl - self._MobsLevel)) <= self.RANGE_FOR_BATTLE_TAKE) and (User.isMain == True) ):
                 PingList.append('@' + User.Username)
-        PingByFive(self.message.chat.id,PingList)
+        Bot.PingByFive(self.message.chat.id,PingList)
 
     def MobsLevel(self):
         AllNumber = 0
+        Number = int()
         StringList = self.message.text.split("\n")
         for String in StringList:
             NumberAsk = re.search('\d\sx\s',String)
@@ -119,7 +119,7 @@ class Mob:
         if(re.search("⚜️Forbidden Champion",self.message.text)):
             self.is_champion = True
             self.PinChamp()
-            GivePots(self.message.chat.id)
+            Bot.GivePots(self.message.chat.id)
             return True
         return False
 
@@ -149,7 +149,6 @@ class Mob:
             self.timer = 360
         self.is_ambush = False
         self.timer = 180
-
 
     def MobsLink(self):
         link = re.search("\/fight.{1,100}", self.message.text)
