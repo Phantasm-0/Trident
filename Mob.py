@@ -33,9 +33,11 @@ class Mob:
         while (isFinalize):
             answer = self.mobs_text + "⏰:РИП\n\n" + "<b>👑 Хокаге по вызову:\n</b>" + self.Helpers()
             message = Bot.edit_message_text(answer, self.message.chat.id, self.message_for_update.message_id, parse_mode='HTML')
-            Response = message.wait()
-            isFinalize = self.TooManyReqestCheck(Response)
-
+            try:
+                Response = message.wait()
+                isFinalize = self.TooManyReqestCheck(Response)
+            except:
+                time.sleep(5)
 
     def Updating(self):
         while (self.IsActualMob()):
