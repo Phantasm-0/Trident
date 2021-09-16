@@ -7,6 +7,7 @@ class MessageManager(telebot.AsyncTeleBot) :
         super(MessageManager, self).__int__(
 
         )
+        self.MY_CHAT_WITH_BOT = 450927903
     def PingByFive(self,ChatId, ListToPing):
         Answer = str()
         Counter = 0
@@ -37,4 +38,4 @@ class MessageManager(telebot.AsyncTeleBot) :
         try:
             super().edit_message_text(args,kwargs)
         except ApiException as Error:
-            self.send_message(MY_CHAT_WITH_BOT,str(Error))
+            self.send_message(self.MY_CHAT_WITH_BOT,str(Error))
