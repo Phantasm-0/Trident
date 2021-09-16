@@ -1,7 +1,6 @@
 import telebot
 import urllib
 from telebot.apihelper import ApiException
-from Global import MY_CHAT_WITH_BOT
 class MessageManager(telebot.AsyncTeleBot) :
     def __int__(self):
         super(MessageManager, self).__int__(
