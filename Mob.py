@@ -29,27 +29,19 @@ class Mob:
         if(self.IsChampion() is False):
             self.Ping()
         self.Updating()
-        isFinalize = True
-        while (isFinalize):
-            answer = self.mobs_text + "⏰:РИП\n\n" + "<b>👑 Хокаге по вызову:\n</b>" + self.Helpers()
-            message = Bot.edit_message_text(answer, self.message.chat.id, self.message_for_update.message_id, parse_mode='HTML')
-            try:
-                Response = message.wait()
-                isFinalize = self.TooManyReqestCheck(Response)
-            except:
+        try:
+                answer = self.mobs_text + "⏰:РИП\n\n" + "<b>👑 Хокаге по вызову:\n</b>" + self.Helpers()
+                Bot.edit_message_text(answer, self.message.chat.id, self.message_for_update.message_id, parse_mode='HTML')
+        except:
                 time.sleep(5)
 
     def Updating(self):
         while (self.IsActualMob()):
             if (self._force_update == False):
                 try:
-                    Response = self.DoUpdate()
-                    response = Response.wait()
-                    if (self.TooManyReqestCheck(response)):
-                        time.sleep(5)
-                    else:
-                        time.sleep(2)
-                except:
+                    self.DoUpdate()
+                    time.sleep(2)
+                except Exception:
                     time.sleep(5)
     def Helpers(self):
         answer = ''
