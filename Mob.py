@@ -87,7 +87,7 @@ class Mob:
         PingList = list()
         for User in Guild.GuildList:
             if(((abs(User.ChatWarsLvl - self._MobsLevel)) <= self.RANGE_FOR_BATTLE_TAKE) and (User.isMain == True) ):
-                PingList.append('@' + User.Username)
+                PingList.append(User.Username)
         Bot.PingByFive(self.message.chat.id,PingList)
 
     def MobsLevel(self):
@@ -125,7 +125,6 @@ class Mob:
             answer = self.mobs_text + "\n" + timers + "\n\n" + "<b>👑 Хокаге по вызову:\n</b>" + self.Helpers()
             response = Bot.edit_message_text(answer, self.message.chat.id, self.message_for_update.message_id,
                                   parse_mode='HTML', reply_markup=self.MobsMarkups("⚔️ В бой", "🤝 Помогаю"))
-            return response
 
     def TooManyReqestCheck(self,Response):
         try:
@@ -134,7 +133,8 @@ class Mob:
             return False
 
     def IsActualMob(self):
-        return time.time() - self.message.forward_date < self.timer
+
+        return (time.time() - self.message.forward_date) < self.timer
 
     def PinChamp(self):
         Bot.pin_chat_message(self.message_for_update.chat.id, self.message_for_update.message_id, disable_notification = True)
