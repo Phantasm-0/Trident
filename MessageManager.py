@@ -27,15 +27,19 @@ class MessageManager(telebot.AsyncTeleBot) :
         answer_url = urllib.parse.quote(answer, )
         answer_html = '<a href="https://t.me/share/url?url=' + answer_url + '">' + "Раги" + '</a>'
         self.Bot.send_message(ChatId, answer_html, parse_mode='HTML')
-    def SendWithShareLink(self,ChatId,AnswerForHTML,AnswerForDisplay):
-        AnswerForHTML = urllib.parse.quote(AnswerForHTML, )
-        AnswerForSend = f'<a href="https://t.me/share/url?url={AnswerForHTML}">{AnswerForDisplay} </a>'
+    def SendResourcesWithShareLink(self,ChatId,AsnwerForSendList):
+        AnswerForSend = str()
+        for ReqestString in AsnwerForSendList:
+            AnswerForHTML = ReqestString[0]
+            AnswerForDisplay = ReqestString[1]
+            AnswerForHTML = urllib.parse.quote(AnswerForHTML, )
+            AnswerForSend += f'<a href="https://t.me/share/url?url={AnswerForHTML}">{AnswerForDisplay} </a> \n'
         self.Bot.send_message(ChatId, AnswerForSend, parse_mode='HTML')
 
 
-    def edit_message_text(self, *args, **kwargs):
-        try:
-            super().edit_message_text(args,kwargs)
-        except ApiException as Error:
-            self.send_message(self.MY_CHAT_WITH_BOT,str(Error))
-            print("SHIT")
+    #def edit_message_text(self, *args, **kwargs):
+        #try:
+           # super().edit_message_text(args,kwargs)
+       # except ApiException as Error:
+           # self.send_message(self.MY_CHAT_WITH_BOT,str(Error))
+          #  print("SHIT")
