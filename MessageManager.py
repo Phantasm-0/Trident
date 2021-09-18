@@ -26,7 +26,7 @@ class MessageManager(telebot.AsyncTeleBot) :
         answer = "/g_withdraw" + " p01 " + str(1) + " p02 " + str(1) + " p03 " + str(1)
         answer_url = urllib.parse.quote(answer, )
         answer_html = '<a href="https://t.me/share/url?url=' + answer_url + '">' + "Раги" + '</a>'
-        self.Bot.send_message(ChatId, answer_html, parse_mode='HTML')
+        self.send_message(ChatId, answer_html, parse_mode='HTML')
     def SendResourcesWithShareLink(self,ChatId,AsnwerForSendList):
         AnswerForSend = str()
         for ReqestString in AsnwerForSendList:
@@ -34,7 +34,7 @@ class MessageManager(telebot.AsyncTeleBot) :
             AnswerForDisplay = ReqestString[1]
             AnswerForHTML = urllib.parse.quote(AnswerForHTML, )
             AnswerForSend += f'<a href="https://t.me/share/url?url={AnswerForHTML}">{AnswerForDisplay} </a> \n'
-        self.Bot.send_message(ChatId, AnswerForSend, parse_mode='HTML')
+        self.send_message(ChatId, AnswerForSend, parse_mode='HTML')
 
 
     #def edit_message_text(self, *args, **kwargs):
