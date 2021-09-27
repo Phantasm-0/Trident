@@ -40,7 +40,7 @@ class Mob:
             if (self._force_update == False):
                 try:
                     self.DoUpdate()
-                    time.sleep(2)
+                    time.sleep(3)
                 except Exception:
                     time.sleep(5)
     def Helpers(self):
