@@ -144,7 +144,6 @@ class Mob:
             self.is_ambush = True
             self.timer = 360
         self.is_ambush = False
-        self.timer = 180
 
     def MobsLink(self):
         link = re.search("\/fight.{1,100}", self.message.text)
