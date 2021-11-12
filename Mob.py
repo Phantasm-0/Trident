@@ -89,7 +89,7 @@ class Mob:
             if(Guild.BlackList.__contains__(User) is not True):
                 if(((abs(User.ChatWarsLvl - self._MobsLevel)) <= self.RANGE_FOR_BATTLE_TAKE) and (User.isMain == True) ):
                     PingList.append(User.Username)
-            Bot.PingByFive(self.message.chat.id,PingList)
+        Bot.PingByFive(self.message.chat.id,PingList)
 
     def MobsLevel(self):
         AllNumber = 0
