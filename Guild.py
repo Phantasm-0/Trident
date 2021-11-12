@@ -25,7 +25,10 @@ class Guild:
         self.Kronprincen = GuildMember('lelehrer','Kronprincen',0,0)
         self.catLeopold = GuildMember('GoTo87','cat Leopold',0,0)
         self.VishenkaNyam = GuildMember('VishenkaNyam','Сахарок',0,0)
+        self.BlackList = []
         self.GuildList = self.Init()
+
+
     def Init(self):
         self.Soare.AddTwink(self.Kronprincen)
         self.Soare.AddTwink(self.catLeopold)
@@ -51,6 +54,7 @@ class Guild:
         self.Scuns.AddTwink(self.catLeopold)
         self.Scuns.AddTwink(self.larina457)
         self.Scuns.AddTwink(self.phenjan)
+        self.BlackList.append(self.Igor)
         return [self.Bekmuart, self.Scuns, self.Igor, self.Tea, self.Vasde, self.larina457,
                 self.Ksandrax, self.EPetuhov, self.undfndnm, self.Soare, self.Andrey,
                     self.AlexanderKobets, self.Dark, self.phenjan, self.Tahena, self.m1sha007, self.Cerethrius, self.Phantasm,
