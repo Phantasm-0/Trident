@@ -1,5 +1,5 @@
 import datetime,re
-from MobWorker import  UserLevelUpdate
+from MobWorker import  user_level_update
 from Global import Bot
 guild_dict = {
 'Bekish': ['bekmurat'],
@@ -43,7 +43,7 @@ const_times_f =[f_morning,f_evening,f_night]
 
 
 def PingOnBattleAndUpdateUsers(message):
-    UserLevelUpdate(message)
+    user_level_update(message)
     now = datetime.datetime.fromtimestamp(message.date,tz)
     for  time_f in const_times_f:
         if((time_f.hour - now.hour  == 0) and (now.minute  - time_f.minute > 0) and (time_f.minute - now.minute <= 14)):

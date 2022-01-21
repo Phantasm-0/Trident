@@ -25,6 +25,7 @@ class Guild:
         self.Kronprincen = GuildMember('lelehrer','Kronprincen',0,0)
         self.catLeopold = GuildMember('GoTo87','cat Leopold',0,0)
         self.VishenkaNyam = GuildMember('VishenkaNyam','Сахарок',0,0)
+        self.Manka = GuildMember('Manka_S', 'Manka',0,0)
         self.BlackList = []
         self.GuildList = self.Init()
 

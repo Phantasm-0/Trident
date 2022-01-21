@@ -1,23 +1,30 @@
 import telebot
 import urllib
-from telebot.apihelper import ApiException
+import logging
+
+
 class MessageManager(telebot.AsyncTeleBot) :
     def __int__(self):
-        super(MessageManager, self).__int__(
-
-        )
+        super(MessageManager, self).__int__()
+        logger = telebot.logger
+        telebot.logger.setLevel(logging.DEBUG)
         self.MY_CHAT_WITH_BOT = 450927903
     def PingByFive(self,ChatId, ListToPing):
         Answer = str()
         Counter = 0
+        responce = list()
         for User in ListToPing:
             Answer += '@' + User + ' '
             Counter += 1
             if (Counter == 5):
-                self.send_message(ChatId, Answer)
+                send_message = self.send_message(ChatId, Answer)
+                responce.append(send_message.wait())
                 Answer = ''
                 Counter = 0
-        self.send_message(ChatId, Answer)
+        send_message = self.send_message(ChatId, Answer)
+        responce.append(send_message.wait())
+        return responce
+
     def GivePots(self,ChatId):
         answer = "/g_withdraw" + " p04 " + str(1) + " p05 " + str(1) + " p06 " + str(1)
         answer_url = urllib.parse.quote(answer, )
@@ -27,6 +34,7 @@ class MessageManager(telebot.AsyncTeleBot) :
         answer_url = urllib.parse.quote(answer, )
         answer_html = '<a href="https://t.me/share/url?url=' + answer_url + '">' + "Раги" + '</a>'
         self.send_message(ChatId, answer_html, parse_mode='HTML')
+
     def SendResourcesWithShareLink(self,ChatId,AsnwerForSendList):
         AnswerForSend = str()
         for ReqestString in AsnwerForSendList:
